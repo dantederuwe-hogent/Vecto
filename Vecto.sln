@@ -3,7 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30517.126
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vecto.Api", "Vecto.Api\Vecto.Api.csproj", "{AC80D97B-9A0D-4D16-A7A3-611B9E743A87}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vecto.Api", "Vecto.Api\Vecto.Api.csproj", "{AC80D97B-9A0D-4D16-A7A3-611B9E743A87}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vecto.Application", "Vecto.Application\Vecto.Application.csproj", "{E1183147-B95C-4439-8BB2-5D763E1BA2CF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vecto.Infrastructure", "Vecto.Infrastructure\Vecto.Infrastructure.csproj", "{032D7583-D250-4BF5-B565-0853AF2020BF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vecto.Core", "Vecto.Core\Vecto.Core.csproj", "{0725C7C8-077B-461C-BE11-2E0D1FC9DC6D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vecto.Tests", "Vecto.Tests\Vecto.Tests.csproj", "{50A010AA-ACB3-4E64-8A76-BB7A7D816685}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +23,22 @@ Global
 		{AC80D97B-9A0D-4D16-A7A3-611B9E743A87}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AC80D97B-9A0D-4D16-A7A3-611B9E743A87}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AC80D97B-9A0D-4D16-A7A3-611B9E743A87}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E1183147-B95C-4439-8BB2-5D763E1BA2CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1183147-B95C-4439-8BB2-5D763E1BA2CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1183147-B95C-4439-8BB2-5D763E1BA2CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1183147-B95C-4439-8BB2-5D763E1BA2CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{032D7583-D250-4BF5-B565-0853AF2020BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{032D7583-D250-4BF5-B565-0853AF2020BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{032D7583-D250-4BF5-B565-0853AF2020BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{032D7583-D250-4BF5-B565-0853AF2020BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0725C7C8-077B-461C-BE11-2E0D1FC9DC6D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0725C7C8-077B-461C-BE11-2E0D1FC9DC6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0725C7C8-077B-461C-BE11-2E0D1FC9DC6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0725C7C8-077B-461C-BE11-2E0D1FC9DC6D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50A010AA-ACB3-4E64-8A76-BB7A7D816685}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50A010AA-ACB3-4E64-8A76-BB7A7D816685}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50A010AA-ACB3-4E64-8A76-BB7A7D816685}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50A010AA-ACB3-4E64-8A76-BB7A7D816685}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

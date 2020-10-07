@@ -8,5 +8,11 @@
     <Folder Include="Controllers\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Vecto.Application\Vecto.Application.csproj" />
+    <ProjectReference Include="..\Vecto.Core\Vecto.Core.csproj" />
+    <ProjectReference Include="..\Vecto.Infrastructure\Vecto.Infrastructure.csproj" />
+  </ItemGroup>
+
 
 </Project>
