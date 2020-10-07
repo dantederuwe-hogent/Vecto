@@ -10,6 +10,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="NSwag.AspNetCore" Version="13.8.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Vecto.Application\Vecto.Application.csproj" />
     <ProjectReference Include="..\Vecto.Core\Vecto.Core.csproj" />
     <ProjectReference Include="..\Vecto.Infrastructure\Vecto.Infrastructure.csproj" />
