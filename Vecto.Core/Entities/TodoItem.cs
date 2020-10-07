@@ -9,5 +9,7 @@ namespace Vecto.Core.Entities
         public bool Checked { get; set; }
 
         public void Toggle() => Checked = !Checked;
+
+        public TodoItem() { }
     }
 }

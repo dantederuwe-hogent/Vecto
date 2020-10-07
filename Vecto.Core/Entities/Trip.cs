@@ -10,5 +10,7 @@ namespace Vecto.Core.Entities
         public DateTime EndDateTime { get; set; }
 
         public IList<Section> Sections { get; } = new List<Section>();
+
+        public Trip() { }
     }
 }

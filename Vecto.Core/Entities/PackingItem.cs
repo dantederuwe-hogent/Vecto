@@ -10,5 +10,7 @@ namespace Vecto.Core.Entities
         public int Amount { get; set; }
 
         public void Toggle() => Checked = !Checked;
+
+        public PackingItem() { }
     }
 }

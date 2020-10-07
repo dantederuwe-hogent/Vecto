@@ -5,5 +5,7 @@ namespace Vecto.Core.Entities
     public class TodoSection : Section
     {
         public IList<TodoItem> Items { get; } = new List<TodoItem>();
+
+        public TodoSection() { }
     }
 }

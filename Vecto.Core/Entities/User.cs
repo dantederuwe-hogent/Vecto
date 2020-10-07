@@ -9,5 +9,7 @@ namespace Vecto.Core.Entities
         public string Email { get; set; }
 
         public IList<Trip> Trips { get; } = new List<Trip>();
+
+        public User() { }
     }
 }
