@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Vecto.Core.Entities;
 
 namespace Vecto.Infrastructure.Data
@@ -14,8 +14,8 @@ namespace Vecto.Infrastructure.Data
             base.OnModelCreating(builder);
             builder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
 
-            builder.Entity<TodoSection>().HasBaseType<Section>();
-            builder.Entity<PackingSection>().HasBaseType<Section>();
+        }
+
         }
     }
 }

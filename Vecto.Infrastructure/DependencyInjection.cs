@@ -1,7 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Vecto.Core.Entities;
+using Vecto.Core.Interfaces;
 using Vecto.Infrastructure.Data;
+using Vecto.Infrastructure.Data.Repositories;
 
 namespace Vecto.Infrastructure
 {
@@ -11,12 +14,14 @@ namespace Vecto.Infrastructure
         {
             services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("VectoDB")));
+
             var provider = services.BuildServiceProvider();
-
             var context = provider.GetRequiredService<AppDbContext>();
-
-            context.Database.EnsureDeleted();
+            context.Database.EnsureDeleted(); //TODO DEV ONLY
             context.Database.EnsureCreated();
+
+
+            services.AddScoped<IRepository<User>, UserRepository>();
         }
     }
 
