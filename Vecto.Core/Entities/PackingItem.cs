@@ -2,7 +2,7 @@
 
 namespace Vecto.Core.Entities
 {
-    public class PackingItem : EntityBase, IToggleable
+    public class PackingItem : EntityBase, ISectionItem, IToggleable
     {
         public string Title { get; set; }
         public string Description { get; set; }
