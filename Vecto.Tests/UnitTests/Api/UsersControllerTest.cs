@@ -153,5 +153,55 @@ namespace Vecto.Tests.UnitTests.Api
             loginFail.Should().BeOfType<BadRequestObjectResult>();
         }
         #endregion
+
+        #region GetLoggedInUser Tests
+        [Fact]
+        public void GetLoggedInUser_UserLoggedIn_ReturnsUser()
+        {
+            // Arrange 
+            var user = DummyData.UserFaker.Generate();
+
+            _sut.ControllerContext = FakeControllerContext.GetLoggedInUserContextFor(user);
+
+            _userRepository.GetBy(user.Email).Returns(user);
+
+            // Act 
+            var meResult = _sut.GetLoggedInUser();
+
+            // Assert 
+            meResult.Should().BeOfType<OkObjectResult>();
+            _userRepository.Received().GetBy(user.Email);
+        }
+
+
+        [Fact]
+        public void GetLoggedInUser_UserNotLoggedIn_ReturnsBadRequestResult()
+        {
+            // Arrange 
+            _sut.ControllerContext = FakeControllerContext.NoLoggedInUserContext;
+
+            // Act 
+            var meResult = _sut.GetLoggedInUser();
+            // Assert 
+            meResult.Should().BeOfType<UnauthorizedResult>();
+        }
+
+        [Fact]
+        public void GetLoggedInUser_UserLoggedIn_ReturnsBadRequestResult()
+        {
+            // Arrange 
+            var user = DummyData.UserFaker.Generate();
+            _sut.ControllerContext = FakeControllerContext.GetLoggedInUserContextFor(user);
+
+            _userRepository.GetBy(user.Email).ReturnsNull();
+
+            // Act 
+            var meResult = _sut.GetLoggedInUser();
+
+            // Assert 
+            meResult.Should().BeOfType<BadRequestResult>();
+        }
+
+        #endregion
     }
 }

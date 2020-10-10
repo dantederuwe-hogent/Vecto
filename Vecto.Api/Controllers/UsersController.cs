@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using System;
 using System.Threading.Tasks;
 using Vecto.Api.Helpers;
 using Vecto.Application.DTOs;
@@ -84,11 +83,20 @@ namespace Vecto.Api.Controllers
         }
 
 
-        [HttpGet("{id}")]
-        public IActionResult GetById(Guid id)
+        /// <summary> Me </summary>
+        /// <param name="model">gives information about the logged-in user</param>
+        [HttpGet("me")]
+        public IActionResult GetLoggedInUser()
         {
-            var user = _userRepository.GetBy(id);
-            return user == null ? (IActionResult)NotFound() : Ok(user);
+            if (!User.Identity.IsAuthenticated) return Unauthorized();
+
+            string email = User.Identity.Name;
+            if (email == null) return BadRequest();
+
+            var user = _userRepository.GetBy(email);
+            if (user == null) return BadRequest();
+
+            return Ok(user);
         }
     }
 }
