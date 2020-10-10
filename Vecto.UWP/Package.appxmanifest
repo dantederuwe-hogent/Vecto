@@ -14,7 +14,7 @@
   <mp:PhoneIdentity PhoneProductId="7e7b17ab-096e-4678-bc41-10973a8446a1" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>UWP</DisplayName>
+    <DisplayName>Vecto.UWP</DisplayName>
     <PublisherDisplayName>liams</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>

@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vecto.Core", "Vecto.Core\Ve
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vecto.Tests", "Vecto.Tests\Vecto.Tests.csproj", "{50A010AA-ACB3-4E64-8A76-BB7A7D816685}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vecto.UWP", "UWP\Vecto.UWP.csproj", "{8E774757-5E75-49A5-AE6E-D60E4EF166A2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vecto.UWP", "Vecto.UWP\Vecto.UWP.csproj", "{8E774757-5E75-49A5-AE6E-D60E4EF166A2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
