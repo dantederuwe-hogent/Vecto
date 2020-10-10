@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
 using Vecto.Core.Entities;
@@ -12,11 +12,11 @@ namespace Vecto.Api.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly IRepository<User> _userRepository;
+        private readonly IUserRepository _userRepository;
         private readonly IConfiguration _configuration;
 
 
-        public UsersController(IRepository<User> userRepository, IConfiguration config)
+        public UsersController(IUserRepository userRepository, IConfiguration config)
         {
             _configuration = config;
             _userRepository = userRepository;
