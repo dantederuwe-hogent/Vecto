@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -23,13 +24,17 @@ namespace Vecto.Api.Controllers
         private readonly IConfiguration _configuration;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly IValidator<LoginDTO> _loginValidator;
+        private readonly IValidator<RegisterDTO> _registerValidator;
 
 
-        public UsersController(IUserRepository userRepository, IConfiguration config, SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager)
+        public UsersController(IUserRepository userRepository, IConfiguration config, SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager, IValidator<LoginDTO> loginValidator, IValidator<RegisterDTO> registerValidator)
         {
             _configuration = config;
             _signInManager = signInManager;
             _userManager = userManager;
+            _loginValidator = loginValidator;
+            _registerValidator = registerValidator;
             _userRepository = userRepository;
         }
 
@@ -41,7 +46,8 @@ namespace Vecto.Api.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register(RegisterDTO model)
         {
-            //TODO validation
+            var validation = _registerValidator.Validate(model);
+            if (!validation.IsValid) return BadRequest(validation);
 
             var existingUser = _userRepository.GetBy(model.Email);
             if (existingUser != null) return BadRequest();
@@ -64,7 +70,8 @@ namespace Vecto.Api.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginDTO model)
         {
-            //TODO validation
+            var validation = _loginValidator.Validate(model);
+            if (!validation.IsValid) return BadRequest(validation);
 
             var user = await _userManager.FindByNameAsync(model.Email);
             if (user == null) return BadRequest();

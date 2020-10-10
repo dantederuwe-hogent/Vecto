@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Vecto.Application;
 using Vecto.Infrastructure;
 
 namespace Vecto.Api
@@ -16,6 +17,7 @@ namespace Vecto.Api
         {
             // Add every layer
             services.AddApi(Configuration);
+            services.AddApplication(Configuration);
             services.AddInfrastructure(Configuration);
         }
 

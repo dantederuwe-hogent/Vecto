@@ -1,5 +1,6 @@
 using DamianTourBackend.Tests.UnitTests.Api;
 using FluentAssertions;
+using FluentValidation;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -7,6 +8,7 @@ using NSubstitute;
 using NSubstitute.ReturnsExtensions;
 using System.Threading.Tasks;
 using Vecto.Api.Controllers;
+using Vecto.Application.DTOs;
 using Vecto.Core.Entities;
 using Vecto.Core.Interfaces;
 using Xunit;
@@ -21,6 +23,8 @@ namespace Vecto.Tests.UnitTests.Api
         private readonly UsersController _sut;
         private readonly UserManager<IdentityUser> _um;
         private readonly IConfiguration _config;
+        private readonly IValidator<LoginDTO> _loginValidator;
+        private readonly IValidator<RegisterDTO> _registerValidator;
 
         public UsersControllerTest()
         {
@@ -30,7 +34,10 @@ namespace Vecto.Tests.UnitTests.Api
             _um = Substitute.For<FakeUserManager>();
             _config = FakeConfiguration.Get();
 
-            _sut = new UsersController(_userRepository, _config, _sim, _um);
+            _registerValidator = Substitute.For<IValidator<RegisterDTO>>();
+            _loginValidator = Substitute.For<IValidator<LoginDTO>>();
+
+            _sut = new UsersController(_userRepository, _config, _sim, _um, _loginValidator, _registerValidator);
 
         }
         #region Register Tests
@@ -41,6 +48,7 @@ namespace Vecto.Tests.UnitTests.Api
             // Arrange
             var registerDTO = DummyData.RegisterDTOFaker.Generate();
             _um.CreateAsync(Arg.Any<IdentityUser>(), Arg.Any<string>()).Returns(IdentityResult.Success);
+            _registerValidator.SetupPass();
 
             // Act          
             var result = await _sut.Register(registerDTO);
@@ -62,6 +70,7 @@ namespace Vecto.Tests.UnitTests.Api
             var registerDTO = DummyData.RegisterDTOFaker.Generate();
             registerDTO.Email = user.Email;
 
+            _registerValidator.SetupPass();
             _userRepository.GetBy(user.Email).Returns(user); //already registered
 
             // Act     
@@ -69,6 +78,21 @@ namespace Vecto.Tests.UnitTests.Api
 
             // Assert
             secondTimeRegister.Should().BeOfType<BadRequestResult>();
+            _userRepository.DidNotReceive().Add(Arg.Any<User>());
+            _userRepository.DidNotReceive().SaveChanges();
+        }
+
+        [Fact]
+        public async Task Register_ValidationFailed_ShouldNotRegisterAndReturnsBadRequest()
+        {
+            // Arrange
+            _registerValidator.SetupFail();
+
+            // Act     
+            var secondTimeRegister = await _sut.Register(new RegisterDTO());
+
+            // Assert
+            secondTimeRegister.Should().BeOfType<BadRequestObjectResult>();
             _userRepository.DidNotReceive().Add(Arg.Any<User>());
             _userRepository.DidNotReceive().SaveChanges();
         }
@@ -84,6 +108,7 @@ namespace Vecto.Tests.UnitTests.Api
             // Arrange
             var loginDTO = DummyData.LoginDTOFaker.Generate();
 
+            _loginValidator.SetupPass();
             _um.FindByNameAsync(loginDTO.Email).Returns(new IdentityUser() { UserName = loginDTO.Email, Email = loginDTO.Email });
 
             _sim.CheckPasswordSignInAsync(Arg.Any<IdentityUser>(), Arg.Any<string>(), Arg.Any<bool>())
@@ -103,6 +128,8 @@ namespace Vecto.Tests.UnitTests.Api
         {
             // Arrange
             var loginDTO = DummyData.LoginDTOFaker.Generate();
+
+            _loginValidator.SetupPass();
             _um.FindByNameAsync(loginDTO.Email).ReturnsNull();
 
             //Act
@@ -110,6 +137,20 @@ namespace Vecto.Tests.UnitTests.Api
 
             //Assert
             login.Should().BeOfType<BadRequestResult>();
+        }
+
+
+        [Fact]
+        public async Task Login_ValidationFailed_ShouldNotLoginAndReturnBadRequest()
+        {
+            // Arrange
+            _loginValidator.SetupFail();
+
+            // Act     
+            var loginFail = await _sut.Login(new LoginDTO());
+
+            // Assert
+            loginFail.Should().BeOfType<BadRequestObjectResult>();
         }
         #endregion
     }
