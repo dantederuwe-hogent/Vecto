@@ -15,21 +15,21 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Vecto.UWP
 {
-    public sealed partial class LoginPage : Page
+    public sealed partial class RegisterPage : Page
     {
-        public LoginPage()
+        public RegisterPage()
         {
             this.InitializeComponent();
         }
 
-        private void LoginButton_Click(object sender, RoutedEventArgs e)
+        private void RegisterButton_Click(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(MainPage));
         }
 
-        private void CreateAccount_Click(object sender, RoutedEventArgs e)
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(RegisterPage));
+            Frame.Navigate(typeof(LoginPage));
         }
     }
 }
