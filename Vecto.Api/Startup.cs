@@ -29,9 +29,9 @@ namespace Vecto.Api
             app.UseHttpsRedirection();
             app.UseOpenApi();
             app.UseSwaggerUi3();
-            app.UseRouting();
-            //app.UseAuthorization();
 
+            app.UseRouting();
+            app.UseAuthorization();
             app.UseEndpoints(endpoints => endpoints.MapControllers());
         }
     }

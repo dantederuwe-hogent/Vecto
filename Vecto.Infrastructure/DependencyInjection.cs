@@ -1,4 +1,4 @@
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Vecto.Core.Interfaces;
@@ -18,7 +18,6 @@ namespace Vecto.Infrastructure
             var context = provider.GetRequiredService<AppDbContext>();
             context.Database.EnsureDeleted(); //TODO DEV ONLY
             context.Database.EnsureCreated();
-
 
             services.AddScoped<IUserRepository, UserRepository>();
         }
