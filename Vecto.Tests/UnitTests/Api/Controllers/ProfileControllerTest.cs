@@ -145,7 +145,7 @@ namespace Vecto.Tests.UnitTests.Api.Controllers
             var result = await _sut.Update(updateProfileDTO);
 
             // Assert 
-            result.Should().BeOfType<OkObjectResult>().Which.Value.Should().Be(user.MapToDTO());
+            result.Should().BeOfType<OkObjectResult>().Which.Value.Should().BeEquivalentTo(user.MapToDTO());
             _userRepository.Received().Update(user);
             _userRepository.Received().SaveChanges();
         }
