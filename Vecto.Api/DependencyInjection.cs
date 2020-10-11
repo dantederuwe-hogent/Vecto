@@ -18,6 +18,7 @@ namespace Vecto.Api
         public static void AddApi(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddControllers();
+            services.AddRouting(options => options.LowercaseUrls = true);
 
             services.AddAndConfigureCustomIdentity();
 
