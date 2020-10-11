@@ -1,5 +1,6 @@
 ﻿using Bogus;
-using Vecto.Application.DTOs;
+using Vecto.Application.Login;
+using Vecto.Application.Register;
 using Vecto.Core.Entities;
 
 namespace Vecto.Tests.UnitTests

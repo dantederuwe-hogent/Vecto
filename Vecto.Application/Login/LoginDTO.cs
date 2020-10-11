@@ -1,4 +1,4 @@
-﻿namespace Vecto.Application.DTOs
+﻿namespace Vecto.Application.Login
 {
     public class LoginDTO
     {

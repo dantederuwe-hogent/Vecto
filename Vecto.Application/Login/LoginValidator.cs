@@ -1,6 +1,5 @@
 ﻿using FluentValidation;
 using System.Text.RegularExpressions;
-using Vecto.Application.DTOs;
 
 namespace Vecto.Application.Login
 {

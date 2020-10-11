@@ -1,9 +1,8 @@
-﻿using DamianTourBackend.Application.Register;
-using FluentValidation;
+﻿using FluentValidation;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Vecto.Application.DTOs;
 using Vecto.Application.Login;
+using Vecto.Application.Register;
 
 namespace Vecto.Application
 {

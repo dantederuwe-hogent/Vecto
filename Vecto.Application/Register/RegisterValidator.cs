@@ -1,8 +1,7 @@
 ﻿using FluentValidation;
-using Vecto.Application.DTOs;
 using Vecto.Application.Login;
 
-namespace DamianTourBackend.Application.Register
+namespace Vecto.Application.Register
 {
     public class RegisterValidator : AbstractValidator<RegisterDTO>
     {

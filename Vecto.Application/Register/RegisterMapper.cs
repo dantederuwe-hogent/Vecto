@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Vecto.Application.DTOs;
 using Vecto.Core.Entities;
 
 namespace Vecto.Application.Register

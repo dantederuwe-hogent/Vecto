@@ -1,5 +1,5 @@
-﻿using DamianTourBackend.Application.Register;
-using FluentValidation.TestHelper;
+﻿using FluentValidation.TestHelper;
+using Vecto.Application.Register;
 using Xunit;
 using Xunit.Abstractions;
 

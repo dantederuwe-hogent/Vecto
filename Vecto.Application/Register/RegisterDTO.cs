@@ -1,4 +1,6 @@
-﻿namespace Vecto.Application.DTOs
+﻿using Vecto.Application.Login;
+
+namespace Vecto.Application.Register
 {
     public class RegisterDTO : LoginDTO
     {
