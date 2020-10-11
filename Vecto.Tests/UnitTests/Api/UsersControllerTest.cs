@@ -157,7 +157,7 @@ namespace Vecto.Tests.UnitTests.Api
 
         #region GetLoggedInUser Tests
         [Fact]
-        public void GetLoggedInUser_UserLoggedIn_ReturnsUser()
+        public void GetProfile_UserLoggedIn_ReturnsUser()
         {
             // Arrange 
             var user = DummyData.UserFaker.Generate();
@@ -167,7 +167,7 @@ namespace Vecto.Tests.UnitTests.Api
             _userRepository.GetBy(user.Email).Returns(user);
 
             // Act 
-            var meResult = _sut.GetLoggedInUser();
+            var meResult = _sut.GetProfile();
 
             // Assert 
             meResult.Should().BeOfType<OkObjectResult>();
@@ -176,19 +176,19 @@ namespace Vecto.Tests.UnitTests.Api
 
 
         [Fact]
-        public void GetLoggedInUser_UserNotLoggedIn_ReturnsBadRequestResult()
+        public void GetProfile_UserNotLoggedIn_ReturnsBadRequestResult()
         {
             // Arrange 
             _sut.ControllerContext = FakeControllerContext.NoLoggedInUserContext;
 
             // Act 
-            var meResult = _sut.GetLoggedInUser();
+            var meResult = _sut.GetProfile();
             // Assert 
             meResult.Should().BeOfType<UnauthorizedResult>();
         }
 
         [Fact]
-        public void GetLoggedInUser_UserLoggedIn_ReturnsBadRequestResult()
+        public void GetProfile_UserLoggedIn_ReturnsBadRequestResult()
         {
             // Arrange 
             var user = DummyData.UserFaker.Generate();
@@ -197,7 +197,7 @@ namespace Vecto.Tests.UnitTests.Api
             _userRepository.GetBy(user.Email).ReturnsNull();
 
             // Act 
-            var meResult = _sut.GetLoggedInUser();
+            var meResult = _sut.GetProfile();
 
             // Assert 
             meResult.Should().BeOfType<BadRequestResult>();

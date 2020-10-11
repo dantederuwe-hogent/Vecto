@@ -1,4 +1,4 @@
-using FluentValidation;
+﻿using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using System.Threading.Tasks;
 using Vecto.Api.Helpers;
 using Vecto.Application.Login;
+using Vecto.Application.Profile;
 using Vecto.Application.Register;
 using Vecto.Core.Interfaces;
 
@@ -86,7 +87,7 @@ namespace Vecto.Api.Controllers
         /// <summary> Me </summary>
         /// <param name="model">gives information about the logged-in user</param>
         [HttpGet("me")]
-        public IActionResult GetLoggedInUser()
+        public IActionResult GetProfile()
         {
             if (!User.Identity.IsAuthenticated) return Unauthorized();
 
@@ -96,7 +97,7 @@ namespace Vecto.Api.Controllers
             var user = _userRepository.GetBy(email);
             if (user == null) return BadRequest();
 
-            return Ok(user);
+            return Ok(user.MapToDTO());
         }
     }
 }
