@@ -1,5 +1,6 @@
 ﻿using Bogus;
 using Vecto.Application.Login;
+using Vecto.Application.Profile;
 using Vecto.Application.Register;
 using Vecto.Core.Entities;
 
@@ -22,5 +23,10 @@ namespace Vecto.Tests.UnitTests
         public static readonly Faker<LoginDTO> LoginDTOFaker = new Faker<LoginDTO>()
             .RuleFor(r => r.Email, f => f.Person.Email)
             .RuleFor(r => r.Password, f => f.Internet.Password(8));
+
+        public static readonly Faker<ProfileDTO> ProfileDTOFaker = new Faker<ProfileDTO>()
+            .RuleFor(u => u.FirstName, f => f.Person.FirstName)
+            .RuleFor(u => u.LastName, f => f.Person.LastName)
+            .RuleFor(u => u.Email, f => f.Person.Email);
     }
 }
