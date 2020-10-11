@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 
-namespace DamianTourBackend.Tests.UnitTests.Api
+namespace Vecto.Tests.UnitTests.Api
 {
     static class FakeConfiguration
     {

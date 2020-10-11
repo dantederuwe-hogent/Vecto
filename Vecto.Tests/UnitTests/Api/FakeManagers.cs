@@ -6,7 +6,7 @@ using Microsoft.Extensions.Options;
 using NSubstitute;
 using System;
 
-namespace DamianTourBackend.Tests.UnitTests.Api
+namespace Vecto.Tests.UnitTests.Api
 {
     public class FakeSignInManager : SignInManager<IdentityUser>
     {
@@ -29,8 +29,8 @@ namespace DamianTourBackend.Tests.UnitTests.Api
             : base(Substitute.For<IUserStore<IdentityUser>>(),
                 Substitute.For<IOptions<IdentityOptions>>(),
                 Substitute.For<IPasswordHasher<IdentityUser>>(),
-                new IUserValidator<IdentityUser>[0],
-                new IPasswordValidator<IdentityUser>[0],
+                Array.Empty<IUserValidator<IdentityUser>>(),
+                Array.Empty<IPasswordValidator<IdentityUser>>(),
                 Substitute.For<ILookupNormalizer>(),
                 Substitute.For<IdentityErrorDescriber>(),
                 Substitute.For<IServiceProvider>(),

@@ -1,18 +1,15 @@
 ﻿using FluentValidation.TestHelper;
 using Vecto.Application.Register;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace Vecto.Tests.UnitTests.Application.Validators
 {
     public class RegisterValidatorTest
     {
-        private readonly ITestOutputHelper _testOutputHelper;
         private readonly RegisterValidator _sut;
 
-        public RegisterValidatorTest(ITestOutputHelper testOutputHelper)
+        public RegisterValidatorTest()
         {
-            _testOutputHelper = testOutputHelper;
             _sut = new RegisterValidator();
         }
 

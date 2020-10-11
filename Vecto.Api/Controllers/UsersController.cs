@@ -27,7 +27,6 @@ namespace Vecto.Api.Controllers
         private readonly IValidator<LoginDTO> _loginValidator;
         private readonly IValidator<RegisterDTO> _registerValidator;
 
-
         public UsersController(IUserRepository userRepository, IConfiguration config, SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager, IValidator<LoginDTO> loginValidator, IValidator<RegisterDTO> registerValidator)
         {
             _configuration = config;
@@ -38,10 +37,6 @@ namespace Vecto.Api.Controllers
             _userRepository = userRepository;
         }
 
-
-        /// <summary> Register a user </summary>
-        /// <param name="model">the user details</param>
-        /// <returns>A token</returns>
         [AllowAnonymous]
         [HttpPost("register")]
         public async Task<IActionResult> Register(RegisterDTO model)
@@ -64,8 +59,6 @@ namespace Vecto.Api.Controllers
             return Created("", token);
         }
 
-        /// <summary> Login </summary>
-        /// <param name="model">the login details</param>
         [AllowAnonymous]
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginDTO model)
@@ -83,9 +76,6 @@ namespace Vecto.Api.Controllers
             return Ok(token);
         }
 
-
-        /// <summary> Me </summary>
-        /// <param name="model">gives information about the logged-in user</param>
         [HttpGet("me")]
         public IActionResult GetProfile()
         {

@@ -1,4 +1,3 @@
-using DamianTourBackend.Tests.UnitTests.Api;
 using FluentAssertions;
 using FluentValidation;
 using Microsoft.AspNetCore.Identity;

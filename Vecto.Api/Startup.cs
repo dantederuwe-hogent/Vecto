@@ -10,15 +10,15 @@ namespace Vecto.Api
 {
     public class Startup
     {
-        public IConfiguration Configuration { get; }
-        public Startup(IConfiguration configuration) => Configuration = configuration;
+        private readonly IConfiguration _configuration;
+        public Startup(IConfiguration configuration) => _configuration = configuration;
 
         public void ConfigureServices(IServiceCollection services)
         {
             // Add every layer
-            services.AddApi(Configuration);
-            services.AddApplication(Configuration);
-            services.AddInfrastructure(Configuration);
+            services.AddApi(_configuration);
+            services.AddApplication(_configuration);
+            services.AddInfrastructure(_configuration);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
