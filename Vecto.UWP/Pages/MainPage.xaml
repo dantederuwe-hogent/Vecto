@@ -1,5 +1,5 @@
 ﻿<Page
-    x:Class="Vecto.UWP.MainPage"
+    x:Class="Vecto.UWP.Pages.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Vecto.UWP"
