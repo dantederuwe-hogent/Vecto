@@ -1,4 +1,7 @@
-﻿using Windows.UI.Xaml;
+﻿using System;
+using Vecto.Application.Login;
+using Vecto.UWP.Services;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 
@@ -6,13 +9,16 @@ namespace Vecto.UWP.Pages.Authentication
 {
     public sealed partial class LoginPage : Page
     {
-        public LoginPage()
-        {
-            InitializeComponent();
-        }
+        private readonly LoginService _service = new LoginService();
 
-        private void LoginButton_Click(object sender, RoutedEventArgs e)
+        public LoginPage() => InitializeComponent();
+
+        private async void LoginButton_Click(object sender, RoutedEventArgs e)
         {
+            var model = new LoginDTO() { Email = EmailTextBox.Text, Password = PasswordBox.Password };
+
+            await _service.Login(model);
+
             Frame.Navigate(typeof(MainPage));
         }
 
