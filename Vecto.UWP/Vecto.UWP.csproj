@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -172,6 +172,10 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Vecto.Application\Vecto.Application.csproj">
+      <Project>{e1183147-b95c-4439-8bb2-5d763e1ba2cf}</Project>
+      <Name>Vecto.Application</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Vecto.Core\Vecto.Core.csproj">
       <Project>{0725c7c8-077b-461c-be11-2e0d1fc9dc6d}</Project>
       <Name>Vecto.Core</Name>
