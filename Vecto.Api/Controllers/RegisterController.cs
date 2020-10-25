@@ -31,7 +31,7 @@ namespace Vecto.Api.Controllers
         [HttpPost("")]
         public async Task<IActionResult> Register(RegisterDTO model)
         {
-            var validation = _registerValidator.Validate(model);
+            var validation = await _registerValidator.ValidateAsync(model);
             if (!validation.IsValid) return BadRequest(validation);
 
             var existingUser = _userRepository.GetBy(model.Email);

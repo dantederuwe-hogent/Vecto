@@ -69,7 +69,7 @@ namespace Vecto.Api.Controllers
         {
             if (!User.Identity.IsAuthenticated) return Unauthorized();
 
-            var validation = _profileValidator.Validate(profileDTO);
+            var validation = await _profileValidator.ValidateAsync(profileDTO);
             if (!validation.IsValid) return BadRequest(validation);
 
             var email = User.Identity.Name;
