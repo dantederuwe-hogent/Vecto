@@ -1,9 +1,10 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Vecto.Application.Login;
 using Vecto.UWP.Helpers;
+using Windows.Security.Credentials;
+using Windows.Storage;
 
 namespace Vecto.UWP.Services
 {
@@ -13,16 +14,34 @@ namespace Vecto.UWP.Services
 
         public LoginService()
         {
-            _client = new HttpClient() { BaseAddress = new Uri(AppSettings.GetSectionString("ApiBaseUrl")) };
+            _client = new HttpClient()
+            {
+                BaseAddress = new Uri(AppSettings.GetSectionString("ApiBaseUrl"))
+            };
 
         }
-        public async Task Login(LoginDTO model)
+        public async Task Login(LoginDTO model, bool rememberMe)
         {
             var result = await _client.PostAsync("login", new JsonContent(model));
             var token = await result.Content.ReadAsStringAsync();
-            Debug.Write(token);
-            //TODO STORE TOKEN
+            token = token.Replace(@"""", ""); //TODO
+
+            if (rememberMe) StorePassword(model);
+            StoreToken(token);
+
             //TODO ERROR HANDLING
+        }
+
+        private static void StorePassword(LoginDTO model)
+        {
+            var vault = new PasswordVault();
+            vault.Add(new PasswordCredential("Vecto", model.Email, model.Password));
+        }
+
+        private static void StoreToken(string token)
+        {
+            var localSettings = ApplicationData.Current.LocalSettings;
+            localSettings.Values["token"] = token;
         }
     }
 }

@@ -16,8 +16,9 @@ namespace Vecto.UWP.Pages.Authentication
         private async void LoginButton_Click(object sender, RoutedEventArgs e)
         {
             var model = new LoginDTO() { Email = EmailTextBox.Text, Password = PasswordBox.Password };
+            bool rememberMe = RememberMe.IsChecked ?? false;
 
-            await _service.Login(model);
+            await _service.Login(model, rememberMe);
 
             Frame.Navigate(typeof(MainPage));
         }

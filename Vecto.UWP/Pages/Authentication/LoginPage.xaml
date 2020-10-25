@@ -10,7 +10,7 @@
         <TextBlock Text="Vecto" Style="{StaticResource HeaderTextBlockStyle}" HorizontalAlignment="Center" Margin="0,0,0,10" />
         <TextBox x:Name="EmailTextBox" Header="E-mail" Width="350" FontSize="18"/>
         <PasswordBox x:Name="PasswordBox" Header="Password" Width="350" FontSize="18"/>
-        <CheckBox Content="Remember Me" FontSize="18" HorizontalAlignment="Center"/>
+        <CheckBox x:Name="RememberMe" Content="Remember Me" FontSize="18" HorizontalAlignment="Center"/>
         <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="0,10,0,0">
             <Button x:Name="LoginButton" Content="Log In" FontSize="20" Width="120" HorizontalAlignment="Center" Click="LoginButton_Click"/>
             <HyperlinkButton Content="or create an Account" FontSize="16" Click="CreateAccount_Click"/>
