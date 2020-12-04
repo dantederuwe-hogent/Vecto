@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using FluentValidation;
@@ -31,6 +31,8 @@ namespace Vecto.Api.Controllers
         public ActionResult<IList<Trip>> GetAll()
         {
             var user = _userRepository.GetBy(User.Identity.Name);
+            if (user == null) return BadRequest();
+            
             return Ok(user.Trips);
         }
         
@@ -55,6 +57,21 @@ namespace Vecto.Api.Controllers
             _userRepository.SaveChanges();
             return RedirectToAction("GetAll");
         }
-        
+
+        [HttpPatch("{id}")]
+        public ActionResult<Trip> Update(Guid id, [FromBody] TripDTO model)
+        {
+            var user = _userRepository.GetBy(User.Identity.Name);
+            if (user == null) return BadRequest();
+
+            var trip = user.Trips.SingleOrDefault(t => t.Id.Equals(id));
+            if (trip == null) return BadRequest();
+
+            trip.UpdateWith(model);
+            _tripsRepository.Update(trip);
+            _tripsRepository.SaveChanges();
+
+            return Ok(trip);
+        }
     }
 }

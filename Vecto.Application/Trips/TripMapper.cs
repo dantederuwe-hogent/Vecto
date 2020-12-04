@@ -12,5 +12,12 @@ namespace Vecto.Application.Trips
                 StartDateTime = model.StartDateTime,
                 EndDateTime = model.EndDateTime
             };
+
+        public static void UpdateWith(this Trip trip, TripDTO model)
+        {
+            trip.Name = model.Name ?? trip.Name;
+            trip.EndDateTime = model.EndDateTime ?? trip.EndDateTime;
+            trip.StartDateTime = model.StartDateTime ?? trip.EndDateTime;
+        }
     }
 }
