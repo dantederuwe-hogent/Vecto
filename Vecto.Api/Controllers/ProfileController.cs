@@ -41,7 +41,7 @@ namespace Vecto.Api.Controllers
             return Ok(user.MapToDTO());
         }
 
-        [HttpDelete("delete")]
+        [HttpDelete("")]
         public async Task<IActionResult> Delete()
         {
             if (!User.Identity.IsAuthenticated) return Unauthorized();
@@ -64,7 +64,7 @@ namespace Vecto.Api.Controllers
             return Ok();
         }
 
-        [HttpPut("update")]
+        [HttpPatch("")]
         public async Task<ActionResult<ProfileDTO>> Update(ProfileDTO profileDTO)
         {
             if (!User.Identity.IsAuthenticated) return Unauthorized();

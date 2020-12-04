@@ -25,7 +25,7 @@ namespace Vecto.Api.Controllers
             _userRepository = userRepository;
         }
         
-        [Route("")]
+        [HttpGet("")]
         public ActionResult<IList<TripDTO>> Get()
         {
             var user = _userRepository.GetBy(User.Identity.Name);
@@ -33,8 +33,7 @@ namespace Vecto.Api.Controllers
         }
         
  
-        [HttpPost]
-        [Route("add")]
+        [HttpPost("")]
         public ActionResult<IList<TripDTO>> Add([FromBody]TripDTO model)
         {
             var user = _userRepository.GetBy(User.Identity.Name);
