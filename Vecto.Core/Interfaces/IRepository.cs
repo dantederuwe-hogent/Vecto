@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Vecto.Core.Entities;
 
@@ -13,6 +13,9 @@ namespace Vecto.Core.Interfaces
         public void Delete(T trip);
         public int SaveChanges();
     }
+
+    public interface ITripRepository : IRepository<Trip> { }
+    
     public interface IUserRepository : IRepository<User>
     {
         public User GetBy(string email);
