@@ -1,4 +1,6 @@
-﻿using FluentValidation;
+﻿using System;
+using System.Collections.Generic;
+using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -24,7 +26,7 @@ namespace Vecto.Api.Controllers
         }
         
         [Route("")]
-        public IActionResult Get()
+        public ActionResult<IList<TripDTO>> Get()
         {
             var user = _userRepository.GetBy(User.Identity.Name);
             return Ok(user.Trips);
@@ -33,7 +35,7 @@ namespace Vecto.Api.Controllers
  
         [HttpPost]
         [Route("add")]
-        public IActionResult Add([FromBody]TripDTO model)
+        public ActionResult<IList<TripDTO>> Add([FromBody]TripDTO model)
         {
             var user = _userRepository.GetBy(User.Identity.Name);
             user.Trips.Add(model.MapToTrip());

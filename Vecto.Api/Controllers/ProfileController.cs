@@ -28,7 +28,7 @@ namespace Vecto.Api.Controllers
         }
 
         [HttpGet("")]
-        public IActionResult Get()
+        public ActionResult<ProfileDTO> Get()
         {
             if (!User.Identity.IsAuthenticated) return Unauthorized();
 
@@ -65,7 +65,7 @@ namespace Vecto.Api.Controllers
         }
 
         [HttpPut("update")]
-        public async Task<IActionResult> Update(ProfileDTO profileDTO)
+        public async Task<ActionResult<ProfileDTO>> Update(ProfileDTO profileDTO)
         {
             if (!User.Identity.IsAuthenticated) return Unauthorized();
 

@@ -29,7 +29,7 @@ namespace Vecto.Api.Controllers
         }
 
         [HttpPost("")]
-        public async Task<IActionResult> Register(RegisterDTO model)
+        public async Task<ActionResult<string>> Register(RegisterDTO model)
         {
             var validation = await _registerValidator.ValidateAsync(model);
             if (!validation.IsValid) return BadRequest(validation);
