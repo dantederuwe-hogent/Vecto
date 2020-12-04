@@ -8,6 +8,8 @@ using NSubstitute.ReturnsExtensions;
 using System.Threading.Tasks;
 using Vecto.Api.Controllers;
 using Vecto.Application.Login;
+using Vecto.Infrastructure;
+using Vecto.Infrastructure.Data;
 using Xunit;
 using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
