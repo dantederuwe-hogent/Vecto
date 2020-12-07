@@ -16,10 +16,11 @@ namespace Vecto.Infrastructure
 
             var provider = services.BuildServiceProvider();
             var context = provider.GetRequiredService<AppDbContext>();
-            context.Database.EnsureDeleted(); //TODO DEV ONLY
+            //context.Database.EnsureDeleted(); //TODO DEV ONLY
             context.Database.EnsureCreated();
 
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<ITripRepository, TripRepository>();
         }
     }
 

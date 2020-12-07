@@ -1,5 +1,7 @@
 ﻿using FluentValidation.TestHelper;
 using Vecto.Application.Register;
+using Vecto.Infrastructure;
+using Vecto.Infrastructure.Data;
 using Xunit;
 
 namespace Vecto.Tests.UnitTests.Application.Validators

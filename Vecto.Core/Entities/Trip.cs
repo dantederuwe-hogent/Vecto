@@ -7,8 +7,8 @@ namespace Vecto.Core.Entities
     public class Trip : EntityBase
     {
         public string Name { get; set; }
-        public DateTime StartDateTime { get; set; }
-        public DateTime EndDateTime { get; set; }
+        public DateTime? StartDateTime { get; set; }
+        public DateTime? EndDateTime { get; set; }
 
         public IList<ISection> Sections { get; } = new List<ISection>();
 

@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using Vecto.Api.Controllers;
 using Vecto.Application.Profile;
 using Vecto.Core.Interfaces;
+using Vecto.Infrastructure;
+using Vecto.Infrastructure.Data;
 using Xunit;
 
 namespace Vecto.Tests.UnitTests.Api.Controllers

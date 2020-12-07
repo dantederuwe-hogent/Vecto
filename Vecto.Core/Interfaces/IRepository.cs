@@ -6,11 +6,18 @@ namespace Vecto.Core.Interfaces
 {
     public interface IRepository<T> where T : EntityBase
     {
-        public void Add(T item);
+        public void Add(T trip);
         public T GetBy(Guid id);
         public IList<T> GetAll();
-        public void Update(T item);
-        public void Delete(T item);
+        public void Update(T trip);
+        public void Delete(T trip);
         public int SaveChanges();
+    }
+
+    public interface ITripRepository : IRepository<Trip> { }
+    
+    public interface IUserRepository : IRepository<User>
+    {
+        public User GetBy(string email);
     }
 }
