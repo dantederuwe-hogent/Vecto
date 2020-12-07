@@ -9,6 +9,10 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-
+        <NavigationView>
+            <NavigationView.MenuItems>
+                <NavigationViewItem Icon="Contact" Name="ProfileNavItem" Loaded="ProfileNavItem_Loaded" />
+            </NavigationView.MenuItems>
+        </NavigationView>
     </Grid>
 </Page>
