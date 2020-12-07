@@ -4,7 +4,7 @@ using Vecto.Application.Profile;
 using Vecto.Application.Register;
 using Vecto.Core.Entities;
 
-namespace Vecto.Tests.UnitTests
+namespace Vecto.Infrastructure.Data
 {
     public static class DummyData
     {
@@ -28,5 +28,11 @@ namespace Vecto.Tests.UnitTests
             .RuleFor(u => u.FirstName, f => f.Person.FirstName)
             .RuleFor(u => u.LastName, f => f.Person.LastName)
             .RuleFor(u => u.Email, f => f.Person.Email);
+
+        public static readonly Faker<Trip> TripFaker = new Faker<Trip>()
+            .RuleFor(u => u.StartDateTime, f => f.Date.Future(5))
+            .RuleFor(u => u.EndDateTime, (f, trip) => trip.StartDateTime?.AddDays(f.Random.Int(2, 20)))
+            .RuleFor(u => u.Name, (f, trip) => $"{f.Address.City()}, {trip.StartDateTime?.Year}");
+
     }
 }

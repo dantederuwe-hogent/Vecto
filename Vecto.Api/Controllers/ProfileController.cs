@@ -28,7 +28,7 @@ namespace Vecto.Api.Controllers
         }
 
         [HttpGet("")]
-        public IActionResult Get()
+        public ActionResult<ProfileDTO> Get()
         {
             if (!User.Identity.IsAuthenticated) return Unauthorized();
 
@@ -41,7 +41,7 @@ namespace Vecto.Api.Controllers
             return Ok(user.MapToDTO());
         }
 
-        [HttpDelete("delete")]
+        [HttpDelete("")]
         public async Task<IActionResult> Delete()
         {
             if (!User.Identity.IsAuthenticated) return Unauthorized();
@@ -64,12 +64,12 @@ namespace Vecto.Api.Controllers
             return Ok();
         }
 
-        [HttpPut("update")]
-        public async Task<IActionResult> Update(ProfileDTO profileDTO)
+        [HttpPatch("")]
+        public async Task<ActionResult<ProfileDTO>> Update(ProfileDTO profileDTO)
         {
             if (!User.Identity.IsAuthenticated) return Unauthorized();
 
-            var validation = _profileValidator.Validate(profileDTO);
+            var validation = await _profileValidator.ValidateAsync(profileDTO);
             if (!validation.IsValid) return BadRequest(validation);
 
             var email = User.Identity.Name;

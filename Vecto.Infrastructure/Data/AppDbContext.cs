@@ -10,6 +10,7 @@ namespace Vecto.Infrastructure.Data
     public class AppDbContext : IdentityDbContext
     {
         public new DbSet<User> Users { get; set; }
+        public new DbSet<Trip> Trips { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
