@@ -1,15 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Bogus.Extensions;
+﻿using Bogus.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Vecto.Api.Helpers;
 using Vecto.Application.Register;
 using Vecto.Core.Entities;
 using Vecto.Core.Interfaces;
-using Vecto.Infrastructure;
 using Vecto.Infrastructure.Data;
 
 namespace Vecto.Api.Controllers
@@ -22,8 +20,8 @@ namespace Vecto.Api.Controllers
     {
         private readonly IConfiguration _configuration;
         private readonly UserManager<IdentityUser> _userManager;
-        private IUserRepository _userRepository;
-        private AppDbContext _dbContext;
+        private readonly IUserRepository _userRepository;
+        private readonly AppDbContext _dbContext;
         
         public DevController(IUserRepository userRepository, UserManager<IdentityUser> userManager, IConfiguration configuration, AppDbContext dbContext)
         {

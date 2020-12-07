@@ -30,7 +30,7 @@ namespace Vecto.Api.Controllers
 
         [AllowAnonymous]
         [HttpPost("")]
-        public async Task<ActionResult<string>> Login(LoginDTO model)
+        public async Task<IActionResult> Login(LoginDTO model)
         {
             var validation = await _loginValidator.ValidateAsync(model);
             if (!validation.IsValid) return BadRequest(validation);
