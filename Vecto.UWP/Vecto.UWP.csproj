@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -131,8 +131,9 @@
     <Compile Include="Pages\Authentication\RegisterPage.xaml.cs">
       <DependentUpon>RegisterPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Services\LoginService.cs" />
-    <Compile Include="Services\ProfileService.cs" />
+    <Compile Include="Services\TokenHandler.cs" />
+    <Compile Include="Services\CustomRefitService.cs" />
+    <Compile Include="Services\IApiService.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -174,8 +175,8 @@
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.9</Version>
     </PackageReference>
-    <PackageReference Include="Newtonsoft.Json">
-      <Version>10.0.1</Version>
+    <PackageReference Include="Refit">
+      <Version>5.2.4</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
