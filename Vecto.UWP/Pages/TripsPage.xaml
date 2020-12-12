@@ -6,9 +6,41 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    Loaded="Page_Loaded"
+    >
+
+    <Page.Resources>
+        <CollectionViewSource x:Name="cvsTrips" Source="{Binding Trips}"/>
+    </Page.Resources>
 
     <Grid>
-        <TextBlock Text="My Trips" Style="{StaticResource HeaderTextBlockStyle}" />
+        <StackPanel Spacing="25">
+            
+            <StackPanel>
+                <TextBlock Text="My Trips" Style="{StaticResource HeaderTextBlockStyle}" />
+                <GridView ItemsSource="{Binding Source={StaticResource cvsTrips}}" MaxHeight="500">
+                    <GridView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Margin="20">
+                                <TextBlock Text="{Binding Name}" FontWeight="Bold" 
+                                   Style="{StaticResource BaseTextBlockStyle}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </GridView.ItemTemplate>
+                    <GridView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <ItemsWrapGrid MaximumRowsOrColumns="3"/>
+                        </ItemsPanelTemplate>
+                    </GridView.ItemsPanel>
+                </GridView>
+            </StackPanel>
+            
+            <StackPanel>
+                <TextBlock Text="Shared with me" Style="{StaticResource HeaderTextBlockStyle}" />
+                <GridView/>
+            </StackPanel>
+            
+        </StackPanel>
     </Grid>
 </Page>
