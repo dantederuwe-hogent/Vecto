@@ -9,10 +9,12 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <NavigationView>
+        <NavigationView Name="VectoNavigationView" ItemInvoked="NavigationView_ItemInvoked">
             <NavigationView.MenuItems>
-                <NavigationViewItem Icon="Contact" Name="ProfileNavItem" Loaded="ProfileNavItem_Loaded" />
+                <NavigationViewItem Icon="Contact" Tag="profile" Name="ProfileNavItem" Loaded="ProfileNavItem_Loaded" />
+                <NavigationViewItem Icon="World" Content="Trips" Tag="trips" Name="TripsNavItem" />
             </NavigationView.MenuItems>
+            <Frame Name="ContentFrame" />
         </NavigationView>
     </Grid>
 </Page>
