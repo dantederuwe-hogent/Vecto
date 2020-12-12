@@ -10,7 +10,7 @@ namespace Vecto.UWP.Pages
 
         public MainPage()
         {
-            _service = CustomRefitService.GetAuthenticated();
+            _service = CustomRefitService.ForAuthenticated<IApiService>();
             InitializeComponent();
         }
 

@@ -14,7 +14,7 @@ namespace Vecto.UWP.Pages.Authentication
 
         public LoginPage()
         {
-            _service = CustomRefitService.Get();
+            _service = CustomRefitService.For<IApiService>();
             InitializeComponent();
         }
 
