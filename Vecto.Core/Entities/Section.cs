@@ -1,14 +1,15 @@
 ﻿using System.Collections.Generic;
+using Vecto.Core.Entities;
 
 namespace Vecto.Core.Interfaces
 {
 
-    public interface ISection
+    public abstract class Section : EntityBase
     {
         public string Name { get; set; }
     }
 
-    public interface ISection<T> : ISection where T : ISectionItem
+    public abstract class Section<T> : Section where T : ISectionItem
     {
         public IList<T> Items { get; }
     }
