@@ -2,6 +2,7 @@
 using Vecto.UWP.Pages.Authentication;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -61,6 +62,12 @@ namespace Vecto.UWP
                 }
                 // Ensure the current window is active
                 Window.Current.Activate();
+            }
+
+            // change to selected theme
+            if(ApplicationData.Current.LocalSettings.Values["theme"] != null) { 
+                ElementTheme theme = (ElementTheme) ApplicationData.Current.LocalSettings.Values["theme"];
+                ((Frame)Window.Current.Content).RequestedTheme = theme;
             }
         }
 

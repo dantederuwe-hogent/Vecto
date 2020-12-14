@@ -8,7 +8,12 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
-
-    </Grid>
+    <StackPanel>
+        <TextBlock Text="Preferred Theme" Style="{StaticResource TitleTextBlockStyle}" />
+        <ComboBox SelectionChanged="ThemeComboBox_SelectionChanged" Width="200" Loaded="ThemeComboBox_Loaded">
+            <ComboBoxItem Content="System" />
+            <ComboBoxItem Content="Light" />
+            <ComboBoxItem Content="Dark" />
+        </ComboBox>
+    </StackPanel>
 </Page>
