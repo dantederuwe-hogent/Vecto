@@ -11,11 +11,27 @@ namespace Vecto.UWP.Pages.Authentication
     public sealed partial class LoginPage : Page
     {
         private readonly IApiService _service;
+        private PasswordVault _passwordVault;
 
         public LoginPage()
         {
             _service = CustomRefitService.For<IApiService>();
+            _passwordVault = new PasswordVault();
             InitializeComponent();
+
+            /* 
+             * if password was stored fill in fields automatically
+             * probably want to change this to automatically log in when we have a sign out button
+             */
+            var credential = GetCredential();
+            if (credential != null)
+            {
+                credential.RetrievePassword();
+
+                EmailTextBox.Text = credential.UserName;
+                PasswordBox.Password = credential.Password;
+                RememberMe.IsChecked = true;
+            }
         }
 
         private async void LoginButton_Click(object sender, RoutedEventArgs e)
@@ -26,6 +42,8 @@ namespace Vecto.UWP.Pages.Authentication
             var token = await _service.Login(model);
 
             if (rememberMe) StorePassword(model);
+            else ClearPassword();
+
             StoreToken(token);
 
             Frame.Navigate(typeof(MainPage));
@@ -36,16 +54,35 @@ namespace Vecto.UWP.Pages.Authentication
             Frame.Navigate(typeof(RegisterPage), null, new SuppressNavigationTransitionInfo());
         }
 
-        private static void StorePassword(LoginDTO model)
+        private void StorePassword(LoginDTO model)
         {
-            var vault = new PasswordVault();
-            vault.Add(new PasswordCredential("Vecto", model.Email, model.Password));
+            _passwordVault.Add(new PasswordCredential("Vecto", model.Email, model.Password));
         }
 
-        private static void StoreToken(string token)
+        private void ClearPassword()
+        {
+            _passwordVault.Remove(GetCredential());
+        }
+
+        private void StoreToken(string token)
         {
             var localSettings = ApplicationData.Current.LocalSettings;
             localSettings.Values["token"] = token.Replace(@"""", "");
+        }
+
+        private PasswordCredential GetCredential()
+        {
+            try
+            {
+                var credentialEnumerator = _passwordVault.FindAllByResource("Vecto").GetEnumerator();
+                credentialEnumerator.MoveNext();
+                var credential = credentialEnumerator.Current;
+                return credential;
+            }
+            catch
+            {
+                return null;
+            }
         }
     }
 }
