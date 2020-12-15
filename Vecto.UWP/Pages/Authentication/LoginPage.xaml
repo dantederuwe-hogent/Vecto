@@ -6,14 +6,27 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-    <StackPanel VerticalAlignment="Center" Height="380" Spacing="10">
+    <StackPanel VerticalAlignment="Center" Height="390" Spacing="10">
         <TextBlock Text="Vecto" Style="{StaticResource HeaderTextBlockStyle}" HorizontalAlignment="Center" Margin="0,0,0,10" />
         <TextBox x:Name="EmailTextBox" Header="E-mail" Width="350" FontSize="18"/>
         <PasswordBox x:Name="PasswordBox" Header="Password" Width="350" FontSize="18"/>
         <CheckBox x:Name="RememberMe" Content="Remember Me" FontSize="18" HorizontalAlignment="Center"/>
-        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="0,10,0,0">
-            <Button x:Name="LoginButton" Content="Log In" FontSize="20" Width="120" HorizontalAlignment="Center" Click="LoginButton_Click"/>
-            <HyperlinkButton Content="or create an Account" FontSize="16" Click="CreateAccount_Click"/>
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+            <Button x:Name="LoginButton" FontSize="20" Width="180" HorizontalAlignment="Center" Click="LoginButton_Click">
+                <Button.Content>
+                    <Grid Width="180" HorizontalAlignment="Center">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="3*" />
+                            <ColumnDefinition Width="3*" />
+                            <ColumnDefinition Width="3*" />
+                        </Grid.ColumnDefinitions>
+                        <ProgressRing HorizontalAlignment="Center" Grid.Column="0" Name="LoginProgressRing" Visibility="Collapsed" IsActive="True" Height="18" Width="18"/>
+                        <TextBlock TextAlignment="Center" Grid.Column="1">Log in</TextBlock>
+                    </Grid>
+                </Button.Content>
+            </Button>
+            <HyperlinkButton HorizontalAlignment="Center" Content="or create an Account" FontSize="16" Click="CreateAccount_Click"/>
         </StackPanel>
+        <TextBlock Name="ErrorTextBlock" TextAlignment="Center" FontSize="16" Foreground="Red" />
     </StackPanel>
 </Page>

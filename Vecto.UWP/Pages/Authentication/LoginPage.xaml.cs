@@ -1,4 +1,7 @@
-﻿using Vecto.Application.Login;
+﻿using Refit;
+using System;
+using System.Net.Http;
+using Vecto.Application.Login;
 using Vecto.UWP.Services;
 using Windows.Security.Credentials;
 using Windows.Storage;
@@ -36,17 +39,36 @@ namespace Vecto.UWP.Pages.Authentication
 
         private async void LoginButton_Click(object sender, RoutedEventArgs e)
         {
+            LoginProgressRing.Visibility = Visibility.Visible;
+
             var model = new LoginDTO() { Email = EmailTextBox.Text, Password = PasswordBox.Password };
             bool rememberMe = RememberMe.IsChecked ?? false;
 
-            var token = await _service.Login(model);
+            // attempt login
+            string token = "";
+            try
+            {
+                token = await _service.Login(model);
 
-            if (rememberMe) StorePassword(model);
-            else ClearPassword();
+                if (rememberMe) StorePassword(model);
+                else ClearPassword();
 
-            StoreToken(token);
+                StoreToken(token);
 
-            Frame.Navigate(typeof(MainPage));
+                Frame.Navigate(typeof(MainPage));
+            }
+            catch (ApiException)
+            {
+                ErrorTextBlock.Text = "Username or password incorrect";
+            }
+            catch (HttpRequestException)
+            {
+                ErrorTextBlock.Text = "Connection timed out";
+            }
+            finally
+            {
+                LoginProgressRing.Visibility = Visibility.Collapsed;
+            }
         }
 
         private void CreateAccount_Click(object sender, RoutedEventArgs e)

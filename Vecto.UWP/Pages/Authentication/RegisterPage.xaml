@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-    <StackPanel VerticalAlignment="Center" Height="380" Spacing="10">
+    <StackPanel VerticalAlignment="Center" Height="390" Spacing="10">
         <TextBlock Text="Vecto" Style="{StaticResource HeaderTextBlockStyle}" HorizontalAlignment="Center" Margin="0,0,0,10" />
         <TextBox Header="E-mail" Width="350" FontSize="18"/>
         <PasswordBox Header="Password" Width="350" FontSize="18"/>
