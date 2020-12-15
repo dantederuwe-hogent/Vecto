@@ -9,6 +9,5 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <TextBlock Text="My Profile" Style="{StaticResource HeaderTextBlockStyle}" />
     </Grid>
 </Page>

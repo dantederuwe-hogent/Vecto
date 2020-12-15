@@ -17,34 +17,20 @@
     </Page.Resources>
 
     <Grid>
-        <StackPanel Spacing="25">
-            
-            <StackPanel>
-                <TextBlock Text="My Trips" Style="{StaticResource HeaderTextBlockStyle}" Margin="0 0 0 10" />
-                <GridView ItemsSource="{Binding Source={StaticResource cvsTrips}}" MaxHeight="500">
-                    <GridView.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Width="300" Padding="20" Background="{ThemeResource SystemListLowColor}">
-                                <TextBlock Text="{Binding Name}" FontWeight="Bold" Style="{StaticResource TitleTextBlockStyle}"/>
-                                <TextBlock Text="{Binding StartDateTime, Converter={StaticResource DateTimeConverter}, ConverterParameter='MMMM yyyy'}" Style="{StaticResource BodyTextBlockStyle}" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </GridView.ItemTemplate>
-                    <GridView.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <ItemsWrapGrid MaximumRowsOrColumns="3" Orientation="Horizontal" />
-                        </ItemsPanelTemplate>
-                    </GridView.ItemsPanel>
-                </GridView>
-            </StackPanel>
-            
-            <!--
-            <StackPanel>
-                <TextBlock Text="Shared with me" Style="{StaticResource HeaderTextBlockStyle}" />
-                <GridView/>
-            </StackPanel>
-            -->
-            
-        </StackPanel>
+        <GridView ItemsSource="{Binding Source={StaticResource cvsTrips}}" >
+            <GridView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Width="300" Padding="20" Background="{ThemeResource SystemListLowColor}">
+                        <TextBlock Text="{Binding Name}" FontWeight="Bold" Style="{StaticResource TitleTextBlockStyle}"/>
+                        <TextBlock Text="{Binding StartDateTime, Converter={StaticResource DateTimeConverter}, ConverterParameter='MMMM yyyy'}" Style="{StaticResource BodyTextBlockStyle}" />
+                    </StackPanel>
+                </DataTemplate>
+            </GridView.ItemTemplate>
+            <GridView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <ItemsWrapGrid MaximumRowsOrColumns="3" Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </GridView.ItemsPanel>
+        </GridView>
     </Grid>
 </Page>

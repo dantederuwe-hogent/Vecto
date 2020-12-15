@@ -14,7 +14,7 @@ namespace Vecto.UWP.Pages.Authentication
     public sealed partial class LoginPage : Page
     {
         private readonly IApiService _service;
-        private PasswordVault _passwordVault;
+        private readonly PasswordVault _passwordVault;
 
         public LoginPage()
         {
