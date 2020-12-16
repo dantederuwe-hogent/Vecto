@@ -5,8 +5,10 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-    <StackPanel VerticalAlignment="Center" Height="390" Spacing="10">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    >
+    
+    <StackPanel VerticalAlignment="Center" Height="470" Spacing="10">
         <TextBlock Text="Vecto" Style="{StaticResource HeaderTextBlockStyle}" HorizontalAlignment="Center" Margin="0,0,0,10" />
         <TextBox x:Name="EmailTextBox" Header="E-mail" Width="350" FontSize="18"/>
         <PasswordBox x:Name="PasswordBox" Header="Password" Width="350" FontSize="18"/>
@@ -16,9 +18,9 @@
                 <Button.Content>
                     <Grid Width="180" HorizontalAlignment="Center">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="3*" />
-                            <ColumnDefinition Width="3*" />
-                            <ColumnDefinition Width="3*" />
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
                         </Grid.ColumnDefinitions>
                         <ProgressRing HorizontalAlignment="Center" Grid.Column="0" Name="LoginProgressRing" Visibility="Collapsed" IsActive="True" Height="18" Width="18"/>
                         <TextBlock TextAlignment="Center" Grid.Column="1">Log in</TextBlock>

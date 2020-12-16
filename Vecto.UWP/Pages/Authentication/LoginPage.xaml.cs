@@ -8,6 +8,7 @@ using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
+using Windows.UI.Xaml.Navigation;
 
 namespace Vecto.UWP.Pages.Authentication
 {
@@ -21,34 +22,47 @@ namespace Vecto.UWP.Pages.Authentication
             _service = CustomRefitService.For<IApiService>();
             _passwordVault = new PasswordVault();
             InitializeComponent();
+        }
 
-            /* 
-             * if password was stored fill in fields automatically
-             * probably want to change this to automatically log in when we have a sign out button
-             */
-            var credential = GetCredential();
-            if (credential != null)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            // check if navigated from register, if so already fill in the registered e-mail
+            if (e.Parameter is string && !e.Parameter.ToString().Equals(""))
             {
-                credential.RetrievePassword();
+                EmailTextBox.Text = (string) e.Parameter;
+                PasswordBox.Password = "";
+                RememberMe.IsChecked = false;
+            }
+            else
+            {
+                /* 
+                 * if password was stored previously, fill in fields automatically
+                 * probably want to change this to automatically log in when we have a sign out button
+                 */
+                var credential = GetCredential();
+                if (credential != null)
+                {
+                    credential.RetrievePassword();
 
-                EmailTextBox.Text = credential.UserName;
-                PasswordBox.Password = credential.Password;
-                RememberMe.IsChecked = true;
+                    EmailTextBox.Text = credential.UserName;
+                    PasswordBox.Password = credential.Password;
+                    RememberMe.IsChecked = true;
+                }
             }
         }
 
         private async void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-            LoginProgressRing.Visibility = Visibility.Visible;
-
-            var model = new LoginDTO() { Email = EmailTextBox.Text, Password = PasswordBox.Password };
-            bool rememberMe = RememberMe.IsChecked ?? false;
-
-            // attempt login
-            string token = "";
             try
             {
-                token = await _service.Login(model);
+                LoginProgressRing.Visibility = Visibility.Visible;
+
+                var model = new LoginDTO() { Email = EmailTextBox.Text, Password = PasswordBox.Password };
+                bool rememberMe = RememberMe.IsChecked ?? false;
+
+                string token = await _service.Login(model);
 
                 if (rememberMe) StorePassword(model);
                 else ClearPassword();
@@ -63,7 +77,7 @@ namespace Vecto.UWP.Pages.Authentication
             }
             catch (HttpRequestException)
             {
-                ErrorTextBlock.Text = "Connection timed out";
+                ErrorTextBlock.Text = "Can't connect to API";
             }
             finally
             {
