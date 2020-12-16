@@ -17,5 +17,8 @@ namespace Vecto.UWP.Services
 
         [Get("/trips")]
         Task<IEnumerable<TripDTO>> GetTrips();
+
+        [Post("/trips")]
+        Task<IEnumerable<TripDTO>> AddTrip(TripDTO tripDTO);
     }
 }

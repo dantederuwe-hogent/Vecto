@@ -16,8 +16,18 @@
         <converters:DateTimeConverter x:Key="DateTimeConverter" />
     </Page.Resources>
 
-    <Grid>
-        <GridView ItemsSource="{Binding Source={StaticResource cvsTrips}}" >
+    <Grid RowSpacing="12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Button Grid.Row="0" Click="AddTripButton_Click">
+            <StackPanel Orientation="Horizontal" Spacing="4">
+                <TextBlock VerticalAlignment="Center" FontFamily="Segoe MDL2 Assets" Text="&#xE710;" />
+                <TextBlock Text="Add Trip" />
+            </StackPanel>
+        </Button>
+        <GridView Grid.Row="1" ItemsSource="{Binding Source={StaticResource cvsTrips}}" >
             <GridView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Width="300" Padding="20" Background="{ThemeResource SystemListLowColor}">
@@ -32,5 +42,18 @@
                 </ItemsPanelTemplate>
             </GridView.ItemsPanel>
         </GridView>
+
+        <ContentDialog
+        Name="AddTripDialog"
+        Title="Add a Trip"
+        PrimaryButtonText="Add"
+        CloseButtonText="Cancel"
+            >
+            <StackPanel Spacing="12" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                <TextBox Name="NewTripNameTextBox" Header="Name" />
+                <DatePicker Name="NewTripStartDatePicker" Header="Start Date" />
+                <DatePicker Name="NewTripEndDatePicker" Header="End Date" />
+            </StackPanel>
+        </ContentDialog>
     </Grid>
 </Page>
