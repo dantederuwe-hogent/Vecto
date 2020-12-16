@@ -64,8 +64,8 @@ namespace Vecto.UWP.Pages.Authentication
 
                 string token = await _service.Login(model);
 
-                if (rememberMe) StorePassword(model);
-                else ClearPassword();
+                ClearCredential();
+                if (rememberMe) StoreCredential(model);
 
                 StoreToken(token);
 
@@ -90,12 +90,12 @@ namespace Vecto.UWP.Pages.Authentication
             Frame.Navigate(typeof(RegisterPage), null, new SuppressNavigationTransitionInfo());
         }
 
-        private void StorePassword(LoginDTO model)
+        private void StoreCredential(LoginDTO model)
         {
             _passwordVault.Add(new PasswordCredential("Vecto", model.Email, model.Password));
         }
 
-        private void ClearPassword()
+        private void ClearCredential()
         {
             _passwordVault.Remove(GetCredential());
         }
