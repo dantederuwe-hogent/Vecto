@@ -52,7 +52,7 @@ namespace Vecto.Api.Controllers
             user.Trips.Add(model.MapToTrip());
             _userRepository.Update(user);
             _userRepository.SaveChanges();
-            return RedirectToAction("GetAll");
+            return Ok(user.Trips);
         }
 
         [HttpPatch("{id}")]
