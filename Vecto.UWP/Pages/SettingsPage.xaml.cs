@@ -23,7 +23,8 @@ namespace Vecto.UWP.Pages
 
         private void ThemeComboBox_Loaded(object sender, RoutedEventArgs e)
         {
-            ((ComboBox)sender).SelectedIndex = (int)_localSettings.Values["theme"];
+            if (_localSettings.Values.Keys.Contains("theme"))
+                ((ComboBox)sender).SelectedIndex = (int)_localSettings.Values["theme"];
         }
     }
 }
