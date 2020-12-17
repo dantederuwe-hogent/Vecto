@@ -25,6 +25,7 @@ namespace Vecto.UWP.Pages
         {
             if (_localSettings.Values.Keys.Contains("theme"))
                 ((ComboBox)sender).SelectedIndex = (int)_localSettings.Values["theme"];
+            else ((ComboBox)sender).SelectedIndex = 0;
         }
     }
 }
