@@ -16,7 +16,7 @@ namespace Vecto.Tests.UnitTests.Helpers
         {
             assertions.BeOfType<OkObjectResult>().Which.Value.ToString().Should().BeJwtToken();
         }
-        
+
         public static void BeCreatedTokenResponse(this ObjectAssertions assertions)
         {
             assertions.BeOfType<CreatedResult>().Which.Value.ToString().Should().BeJwtToken();

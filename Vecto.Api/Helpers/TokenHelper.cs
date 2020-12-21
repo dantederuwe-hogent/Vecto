@@ -13,7 +13,7 @@ namespace Vecto.Api.Helpers
     {
         public static string GetToken(IdentityUser user, IConfiguration configuration, bool rememberMe = false)
         {
-        // Create the token
+            // Create the token
             var claims = new[]
             {
                 new Claim(JwtRegisteredClaimNames.Sub, user.Email),

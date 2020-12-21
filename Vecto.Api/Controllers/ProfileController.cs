@@ -48,7 +48,7 @@ namespace Vecto.Api.Controllers
         {
             string email = User.Identity.Name;
             if (email == null) return Unauthorized();
-            
+
             var user = _userRepository.GetBy(email);
             var identityUser = await _userManager.FindByNameAsync(email);
             if (user == null || identityUser == null) return BadRequest();
@@ -69,10 +69,10 @@ namespace Vecto.Api.Controllers
         {
             string email = User.Identity.Name;
             if (email == null) return Unauthorized();
-            
+
             var validation = await _profileValidator.ValidateAsync(profileDTO);
             if (!validation.IsValid) return BadRequest(validation);
-            
+
             var user = _userRepository.GetBy(email);
             var identityUser = await _userManager.FindByNameAsync(email);
             if (user == null || identityUser == null) return BadRequest();

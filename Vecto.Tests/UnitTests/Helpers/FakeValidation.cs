@@ -17,7 +17,7 @@ namespace Vecto.Tests.UnitTests.Helpers
         /// <summary>Generic method to setup a failing validator</summary>
         public static void SetupFail<T>(this IValidator<T> validator)
         {
-            var failures = new List<ValidationFailure>() {new ValidationFailure("TestProperty", "TestErrorMessage")};
+            var failures = new List<ValidationFailure>() { new ValidationFailure("TestProperty", "TestErrorMessage") };
             validator.Validate(Arg.Any<T>()).Returns(new ValidationResult(failures));
             validator.ValidateAsync(Arg.Any<T>()).Returns(new ValidationResult(failures));
         }

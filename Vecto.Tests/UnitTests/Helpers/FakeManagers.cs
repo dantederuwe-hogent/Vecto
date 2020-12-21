@@ -19,8 +19,7 @@ namespace Vecto.Tests.UnitTests.Helpers
                 Substitute.For<ILogger<SignInManager<IdentityUser>>>(),
                 Substitute.For<IAuthenticationSchemeProvider>(),
                 Substitute.For<IUserConfirmation<IdentityUser>>()
-            )
-        { }
+            ) { }
     }
 
     public class FakeUserManager : UserManager<IdentityUser>
@@ -34,7 +33,7 @@ namespace Vecto.Tests.UnitTests.Helpers
                 Substitute.For<ILookupNormalizer>(),
                 Substitute.For<IdentityErrorDescriber>(),
                 Substitute.For<IServiceProvider>(),
-                Substitute.For<ILogger<UserManager<IdentityUser>>>())
-        { }
+                Substitute.For<ILogger<UserManager<IdentityUser>>>()
+            ) { }
     }
 }

@@ -9,9 +9,9 @@ namespace Vecto.Application.Sections
         {
             return dto.SectionType switch
             {
-                nameof(PackingSection) => new PackingSection() {Name = dto.Name},
-                nameof(TodoSection) => new TodoSection() {Name = dto.Name},
-                _ => throw new ArgumentException( "Section type is not valid", nameof(dto.SectionType))
+                nameof(PackingSection) => new PackingSection() { Name = dto.Name },
+                nameof(TodoSection) => new TodoSection() { Name = dto.Name },
+                _ => throw new ArgumentException("Section type is not valid", nameof(dto.SectionType))
             };
         }
     }

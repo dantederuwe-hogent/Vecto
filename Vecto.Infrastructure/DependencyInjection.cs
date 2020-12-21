@@ -23,5 +23,4 @@ namespace Vecto.Infrastructure
             services.AddScoped<ITripRepository, TripRepository>();
         }
     }
-
 }

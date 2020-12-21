@@ -9,7 +9,7 @@ namespace Vecto.Tests.UnitTests.Helpers
         {
             var myConfiguration = new Dictionary<string, string>
             {
-                {"JWT:Secret", "dummyJWTSecretKeyForTestingPurposes"},
+                { "JWT:Secret", "dummyJWTSecretKeyForTestingPurposes" },
             };
 
             return new ConfigurationBuilder()

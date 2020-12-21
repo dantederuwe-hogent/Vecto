@@ -19,7 +19,7 @@ namespace Vecto.Tests.UnitTests.Api.Controllers
         private readonly IUserRepository _userRepository = Substitute.For<IUserRepository>();
         private readonly IValidator<ProfileDTO> _profileValidator = Substitute.For<IValidator<ProfileDTO>>();
         private readonly UserManager<IdentityUser> _um = Substitute.For<FakeUserManager>();
-        
+
         private readonly ProfileController _sut;
 
         public ProfileControllerTest()
@@ -51,7 +51,7 @@ namespace Vecto.Tests.UnitTests.Api.Controllers
 
             // Act 
             var result = _sut.Get();
-            
+
             // Assert 
             result.Should().BeOfType<UnauthorizedResult>();
         }
@@ -105,6 +105,7 @@ namespace Vecto.Tests.UnitTests.Api.Controllers
             // Assert 
             result.Should().BeOfType<BadRequestResult>();
         }
+
         [Fact]
         public async Task DeleteProfile_UserNotLoggedIn_FailsAndReturnsUnauthorizedResult()
         {
@@ -151,7 +152,7 @@ namespace Vecto.Tests.UnitTests.Api.Controllers
             var user = DummyData.UserFaker.Generate();
             _sut.ControllerContext = FakeControllerContext.GetLoggedInUserContextFor(user);
             _profileValidator.SetupFail();
-            
+
             // Act 
             var result = await _sut.Update(updateProfileDTO);
 

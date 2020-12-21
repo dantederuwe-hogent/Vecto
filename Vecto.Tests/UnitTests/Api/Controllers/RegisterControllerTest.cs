@@ -23,7 +23,7 @@ namespace Vecto.Tests.UnitTests.Api.Controllers
         private readonly IValidator<RegisterDTO> _registerValidator = Substitute.For<IValidator<RegisterDTO>>();
 
         private readonly RegisterController _sut;
-        
+
         public RegisterControllerTest()
         {
             _sut = new RegisterController(_userRepository, _config, _um, _registerValidator);
