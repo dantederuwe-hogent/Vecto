@@ -29,6 +29,8 @@ namespace Vecto.UWP.Pages
 
         private void NavigationView_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
         {
+            VectoNavigationView.IsBackButtonVisible = NavigationViewBackButtonVisible.Collapsed;
+
             if (args.IsSettingsInvoked)
             {
                 ContentFrame.Navigate(typeof(SettingsPage));
