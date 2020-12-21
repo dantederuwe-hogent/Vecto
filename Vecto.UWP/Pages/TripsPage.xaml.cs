@@ -1,5 +1,6 @@
 using System;
 using Vecto.Application.Trips;
+using Vecto.Core.Entities;
 using Vecto.UWP.Services;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -52,10 +53,10 @@ namespace Vecto.UWP.Pages
 
         private void GridView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            var trip = (TripDTO)e.ClickedItem;
+            var trip = (Trip)e.ClickedItem;
             _navigationView.Header = trip.Name;
             _navigationView.IsBackButtonVisible = NavigationViewBackButtonVisible.Visible;
-            Frame.Navigate(typeof(TripDetailsPage), trip);
+            Frame.Navigate(typeof(TripDetailsPage), new { trip, _navigationView });
         }
     }
 }
