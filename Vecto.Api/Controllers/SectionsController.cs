@@ -43,22 +43,22 @@ namespace Vecto.Api.Controllers
 
             return Ok(trip.Sections);
         }
-
-        [HttpGet("name")]
-        public IActionResult GetBy(Guid tripId, string name)
+        
+        [HttpGet("{sectionId}")]
+        public IActionResult GetBy(Guid tripId, Guid sectionId)
         {
             var user = _userRepository.GetBy(User.Identity.Name);
             if (user == null) return BadRequest();
 
-            var trip = user.Trips.SingleOrDefault(t => t.Id.Equals(tripId));
-            if (trip == null) return BadRequest();
+            var trip = _tripsRepository.GetBy(tripId);
+            if (trip == null) return NotFound($"trip with id {tripId} not found");
 
-            var section = trip.Sections.SingleOrDefault(s => s.Name.Equals(name));
-            if (section == null) return BadRequest();
+            var section = trip.Sections.SingleOrDefault(s => s.Id.Equals(sectionId));
+            if (section == null) return NotFound($"section with id {sectionId} not found in trip with id {tripId}");
 
-            return Ok(trip.Sections);
+            return Ok(section);
         }
-
+        
         [HttpPost("")]
         public async Task<IActionResult> Add(Guid tripId, [FromBody] SectionDTO model)
         {
