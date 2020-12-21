@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Vecto.Core.Interfaces;
 
 namespace Vecto.Core.Entities
 {

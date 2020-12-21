@@ -3,9 +3,8 @@ using Vecto.Core.Interfaces;
 
 namespace Vecto.Core.Entities
 {
-    public class PackingSection : Section<PackingItem>
+    public class PackingSection : Section, ISection<PackingItem>
     {
-        public string Name { get; set; }
         public IList<PackingItem> Items { get; } = new List<PackingItem>();
 
         public PackingSection() { }

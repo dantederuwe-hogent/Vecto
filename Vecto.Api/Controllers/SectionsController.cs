@@ -31,7 +31,7 @@ namespace Vecto.Api.Controllers
             var user = _userRepository.GetBy(User.Identity.Name);
             if (user == null) return BadRequest();
 
-            var trip = user.Trips.SingleOrDefault(t => t.Id.Equals(tripId));
+            var trip = _tripsRepository.GetBy(tripId);
             if (trip == null) return BadRequest();
 
             return Ok(trip.Sections);
@@ -56,8 +56,8 @@ namespace Vecto.Api.Controllers
         public IActionResult Add(Guid tripId, string name, bool todo)
         {
             Section section;
-            if (todo) section = new PackingSection() { Name = name };
-            else section = new TodoSection() { Name = name };
+            if (todo) section = new TodoSection() { Name = name };
+            else section = new PackingSection() { Name = name };
 
             var trip = _tripsRepository.GetBy(tripId);
             trip.Sections.Add(section);
@@ -65,7 +65,7 @@ namespace Vecto.Api.Controllers
             _tripsRepository.Update(trip);
             _tripsRepository.SaveChanges();
 
-            return RedirectToAction("GetBy", new { tripId });
+            return Ok(trip.Sections);
         }
     }
 }

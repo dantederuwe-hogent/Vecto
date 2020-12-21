@@ -1,16 +1,11 @@
-﻿using System.Collections.Generic;
-using Vecto.Core.Entities;
+﻿using Vecto.Core.Interfaces;
 
-namespace Vecto.Core.Interfaces
+namespace Vecto.Core.Entities
 {
-
-    public abstract class Section : EntityBase
+    public abstract class Section : EntityBase, ISection
     {
         public string Name { get; set; }
-    }
-
-    public abstract class Section<T> : Section where T : ISectionItem
-    {
-        public IList<T> Items { get; }
+        
+        public string SectionType { get; set; }
     }
 }
