@@ -9,12 +9,10 @@ namespace Vecto.Tests.UnitTests.Application.Validators
 {
     public class LoginValidatorTest
     {
-        private readonly ITestOutputHelper _testOutputHelper;
         private readonly LoginValidator _sut;
 
-        public LoginValidatorTest(ITestOutputHelper testOutputHelper)
+        public LoginValidatorTest()
         {
-            _testOutputHelper = testOutputHelper;
             _sut = new LoginValidator();
         }
 
