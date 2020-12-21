@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using FluentValidation;
+﻿using FluentValidation;
 using Vecto.Application.Helpers;
 using Vecto.Core.Entities;
 
@@ -12,7 +11,7 @@ namespace Vecto.Application.Sections
             RuleFor(s => s.Name)
                 .NotEmpty()
                 .MaximumLength(100);
-            
+
             var validTypes = typeof(Section).GetSubtypeNamesInSameAssembly();
             string allowed = string.Join(", ", validTypes);
 

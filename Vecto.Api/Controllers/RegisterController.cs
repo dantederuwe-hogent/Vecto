@@ -20,7 +20,12 @@ namespace Vecto.Api.Controllers
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IValidator<RegisterDTO> _registerValidator;
 
-        public RegisterController(IUserRepository userRepository, IConfiguration config, UserManager<IdentityUser> userManager, IValidator<RegisterDTO> registerValidator)
+        public RegisterController(
+            IUserRepository userRepository,
+            IConfiguration config,
+            UserManager<IdentityUser> userManager,
+            IValidator<RegisterDTO> registerValidator
+        )
         {
             _configuration = config;
             _userManager = userManager;

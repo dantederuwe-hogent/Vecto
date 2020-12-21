@@ -1,7 +1,7 @@
-﻿using Microsoft.Extensions.Configuration;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Microsoft.Extensions.Configuration;
 
-namespace Vecto.Tests.UnitTests.Api
+namespace Vecto.Tests.UnitTests.Helpers
 {
     static class FakeConfiguration
     {
@@ -9,7 +9,7 @@ namespace Vecto.Tests.UnitTests.Api
         {
             var myConfiguration = new Dictionary<string, string>
             {
-                {"JWT:Secret", "dummyJWTSecretKeyForTestingPurposes"},
+                { "JWT:Secret", "dummyJWTSecretKeyForTestingPurposes" },
             };
 
             return new ConfigurationBuilder()

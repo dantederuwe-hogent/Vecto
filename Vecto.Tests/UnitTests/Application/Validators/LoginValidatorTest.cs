@@ -1,20 +1,16 @@
 ﻿using FluentValidation.TestHelper;
 using Vecto.Application.Login;
-using Vecto.Infrastructure;
 using Vecto.Infrastructure.Data;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace Vecto.Tests.UnitTests.Application.Validators
 {
     public class LoginValidatorTest
     {
-        private readonly ITestOutputHelper _testOutputHelper;
         private readonly LoginValidator _sut;
 
-        public LoginValidatorTest(ITestOutputHelper testOutputHelper)
+        public LoginValidatorTest()
         {
-            _testOutputHelper = testOutputHelper;
             _sut = new LoginValidator();
         }
 

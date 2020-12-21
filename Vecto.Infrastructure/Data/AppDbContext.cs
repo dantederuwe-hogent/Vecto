@@ -19,14 +19,14 @@ namespace Vecto.Infrastructure.Data
             base.OnModelCreating(builder);
             builder.Entity<IdentityUser>().ToTable("IdentityUsers");
             builder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
-
         }
 
         public override int SaveChanges()
         {
             var entries = ChangeTracker
                 .Entries()
-                .Where(e => e.Entity is EntityBase && (e.State == EntityState.Added || e.State == EntityState.Modified));
+                .Where(e => e.Entity is EntityBase &&
+                            (e.State == EntityState.Added || e.State == EntityState.Modified));
 
             foreach (var entry in entries)
             {

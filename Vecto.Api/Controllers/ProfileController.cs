@@ -20,7 +20,11 @@ namespace Vecto.Api.Controllers
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IValidator<ProfileDTO> _profileValidator;
 
-        public ProfileController(IUserRepository userRepository, UserManager<IdentityUser> userManager, IValidator<ProfileDTO> profileValidator)
+        public ProfileController(
+            IUserRepository userRepository,
+            UserManager<IdentityUser> userManager,
+            IValidator<ProfileDTO> profileValidator
+        )
         {
             _userRepository = userRepository;
             _userManager = userManager;
@@ -30,13 +34,11 @@ namespace Vecto.Api.Controllers
         [HttpGet("")]
         public IActionResult Get()
         {
-            if (!User.Identity.IsAuthenticated) return Unauthorized();
-
             string email = User.Identity.Name;
-            if (email == null) return BadRequest();
+            if (email is null) return Unauthorized();
 
             var user = _userRepository.GetBy(email);
-            if (user == null) return BadRequest();
+            if (user is null) return BadRequest();
 
             return Ok(user.MapToDTO());
         }
@@ -44,14 +46,12 @@ namespace Vecto.Api.Controllers
         [HttpDelete("")]
         public async Task<IActionResult> Delete()
         {
-            if (!User.Identity.IsAuthenticated) return Unauthorized();
+            string email = User.Identity.Name;
+            if (email is null) return Unauthorized();
 
-            string mailAdress = User.Identity.Name;
-            if (mailAdress == null) return BadRequest();
-
-            var user = _userRepository.GetBy(mailAdress);
-            var identityUser = await _userManager.FindByNameAsync(mailAdress);
-            if (user == null || identityUser == null) return BadRequest();
+            var user = _userRepository.GetBy(email);
+            var identityUser = await _userManager.FindByNameAsync(email);
+            if (user is null || identityUser is null) return BadRequest();
 
             // Delete User
             _userRepository.Delete(user);
@@ -67,16 +67,15 @@ namespace Vecto.Api.Controllers
         [HttpPatch("")]
         public async Task<IActionResult> Update(ProfileDTO profileDTO)
         {
-            if (!User.Identity.IsAuthenticated) return Unauthorized();
+            string email = User.Identity.Name;
+            if (email is null) return Unauthorized();
 
             var validation = await _profileValidator.ValidateAsync(profileDTO);
             if (!validation.IsValid) return BadRequest(validation);
 
-            var email = User.Identity.Name;
-
             var user = _userRepository.GetBy(email);
             var identityUser = await _userManager.FindByNameAsync(email);
-            if (user == null || identityUser == null) return BadRequest();
+            if (user is null || identityUser is null) return BadRequest();
 
             // Update User
             user.UpdateWith(profileDTO);

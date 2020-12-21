@@ -24,41 +24,46 @@ namespace Vecto.Api.Controllers
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IUserRepository _userRepository;
         private readonly AppDbContext _dbContext;
-        
-        public DevController(IUserRepository userRepository, UserManager<IdentityUser> userManager, IConfiguration configuration, AppDbContext dbContext)
+
+        public DevController(
+            IUserRepository userRepository,
+            UserManager<IdentityUser> userManager,
+            IConfiguration configuration,
+            AppDbContext dbContext
+        )
         {
             _userRepository = userRepository;
             _userManager = userManager;
             _configuration = configuration;
             _dbContext = dbContext;
         }
-        
+
         [HttpGet("allUsers")]
         public IActionResult GetAllUsers()
         {
             var users = _userRepository.GetAll();
             return Ok(new
-            {   
+            {
                 users.Count,
                 users
             });
         }
-        
+
         [HttpPost("seeduser")]
         public async Task<IActionResult> SeedUser()
         {
             var model = DummyData.RegisterDTOFaker.Generate();
-            
+
             var identityUser = model.MapToIdentityUser();
             var result = await _userManager.CreateAsync(identityUser, model.Password);
-            
+
             if (!result.Succeeded) return BadRequest();
 
             var user = model.MapToUser();
 
             var trips = DummyData.TripFaker.GenerateBetween(2, 6);
-            trips.ForEach(t=> t.Sections.Add(DummyData.SectionDTOFaker.Generate().MapToSection()));
-            
+            trips.ForEach(t => t.Sections.Add(DummyData.SectionDTOFaker.Generate().MapToSection()));
+
             ((List<Trip>) user.Trips).AddRange(trips);
             _userRepository.Add(user);
             _userRepository.SaveChanges();
@@ -67,7 +72,8 @@ namespace Vecto.Api.Controllers
             return Created("", new
             {
                 Token = token,
-                Login = new {
+                Login = new
+                {
                     user.Email,
                     model.Password,
                 },
@@ -83,7 +89,7 @@ namespace Vecto.Api.Controllers
             _dbContext.Database.EnsureCreated();
             return Ok("it has been done");
         }
-        
+
         [HttpPost("deletedatabase/{sure}")]
         public IActionResult DeleteDatabase(bool sure)
         {
@@ -91,7 +97,7 @@ namespace Vecto.Api.Controllers
             _dbContext.Database.EnsureDeleted();
             return Ok("it has been done, please restart your application!");
         }
-        
+
         [HttpPost("migratedatabase/{sure}")]
         public IActionResult MigrateDatabase(bool sure)
         {
