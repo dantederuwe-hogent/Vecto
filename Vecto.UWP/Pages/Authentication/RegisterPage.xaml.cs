@@ -1,5 +1,7 @@
-﻿using Refit;
+﻿using Newtonsoft.Json.Linq;
+using Refit;
 using System.Net.Http;
+using System.Text;
 using Vecto.Application.Register;
 using Vecto.UWP.Services;
 using Windows.UI.Xaml;
@@ -35,10 +37,17 @@ namespace Vecto.UWP.Pages.Authentication
                 await _service.Register(registerDTO);
                 Frame.Navigate(typeof(LoginPage), EmailTextBox.Text, new SuppressNavigationTransitionInfo());
             }
-            catch (ApiException)
+            catch (ApiException ex)
             {
-                //TODO: better error messages
-                ErrorTextBlock.Text = "API Exception, invalid registration";
+                StringBuilder sb = new StringBuilder();
+
+                dynamic errors = JObject.Parse(ex.Content)["errors"];
+                foreach (var error in errors)
+                {
+                    sb.AppendFormat($"- {error.errorMessage}\n");
+                }
+
+                ErrorTextBlock.Text = sb.ToString();
             }
             catch (HttpRequestException)
             {
