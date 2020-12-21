@@ -25,7 +25,11 @@ namespace Vecto.Api.Controllers
         private readonly IUserRepository _userRepository;
         private readonly IValidator<SectionDTO> _sectionValidator;
 
-        public SectionsController(ITripRepository tripsRepository, IUserRepository userRepository, IValidator<SectionDTO> sectionValidator)
+        public SectionsController(
+            ITripRepository tripsRepository,
+            IUserRepository userRepository,
+            IValidator<SectionDTO> sectionValidator
+        )
         {
             _tripsRepository = tripsRepository;
             _userRepository = userRepository;
@@ -43,7 +47,7 @@ namespace Vecto.Api.Controllers
 
             return Ok(trip.Sections);
         }
-        
+
         [HttpGet("{sectionId}")]
         public IActionResult GetBy(Guid tripId, Guid sectionId)
         {
@@ -58,19 +62,19 @@ namespace Vecto.Api.Controllers
 
             return Ok(section);
         }
-        
+
         [HttpPost("")]
         public async Task<IActionResult> Add(Guid tripId, [FromBody] SectionDTO model)
         {
             var validation = await _sectionValidator.ValidateAsync(model);
             if (!validation.IsValid) return BadRequest(validation);
-            
+
             var trip = _tripsRepository.GetBy(tripId);
-            if(trip == null) return NotFound("trip not found");
-            
+            if (trip == null) return NotFound("trip not found");
+
             var section = model.MapToSection();
             trip.Sections.Add(section);
-            
+
             _tripsRepository.Update(trip);
             _tripsRepository.SaveChanges();
 

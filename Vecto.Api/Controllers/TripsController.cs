@@ -23,16 +23,16 @@ namespace Vecto.Api.Controllers
             _tripsRepository = tripsRepository;
             _userRepository = userRepository;
         }
-        
+
         [HttpGet("")]
         public IActionResult GetAll()
         {
             var user = _userRepository.GetBy(User.Identity.Name);
             if (user == null) return BadRequest();
-            
+
             return Ok(user.Trips);
         }
-        
+
         [HttpGet("{id}")]
         public IActionResult GetBy(Guid id)
         {
@@ -41,17 +41,21 @@ namespace Vecto.Api.Controllers
 
             var trip = user.Trips.SingleOrDefault(t => t.Id.Equals(id));
             if (trip == null) return BadRequest();
-            
+
             return Ok(trip);
         }
 
         [HttpPost("")]
-        public IActionResult Add([FromBody]TripDTO model)
+        public IActionResult Add([FromBody] TripDTO model)
         {
             var user = _userRepository.GetBy(User.Identity.Name);
+            if (user == null) return BadRequest();
+
             user.Trips.Add(model.MapToTrip());
+
             _userRepository.Update(user);
             _userRepository.SaveChanges();
+
             return Ok(user.Trips);
         }
 
@@ -65,6 +69,7 @@ namespace Vecto.Api.Controllers
             if (trip == null) return BadRequest();
 
             trip.UpdateWith(model);
+
             _tripsRepository.Update(trip);
             _tripsRepository.SaveChanges();
 
