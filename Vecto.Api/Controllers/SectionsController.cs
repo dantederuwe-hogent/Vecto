@@ -40,10 +40,10 @@ namespace Vecto.Api.Controllers
         public IActionResult GetAll(Guid tripId)
         {
             var user = _userRepository.GetBy(User.Identity.Name);
-            if (user == null) return BadRequest();
+            if (user is null) return BadRequest();
 
             var trip = _tripsRepository.GetBy(tripId);
-            if (trip == null) return BadRequest();
+            if (trip is null) return BadRequest();
 
             return Ok(trip.Sections);
         }
@@ -52,13 +52,13 @@ namespace Vecto.Api.Controllers
         public IActionResult GetBy(Guid tripId, Guid sectionId)
         {
             var user = _userRepository.GetBy(User.Identity.Name);
-            if (user == null) return BadRequest();
+            if (user is null) return BadRequest();
 
             var trip = _tripsRepository.GetBy(tripId);
-            if (trip == null) return NotFound($"trip with id {tripId} not found");
+            if (trip is null) return NotFound($"trip with id {tripId} not found");
 
             var section = trip.Sections.SingleOrDefault(s => s.Id.Equals(sectionId));
-            if (section == null) return NotFound($"section with id {sectionId} not found in trip with id {tripId}");
+            if (section is null) return NotFound($"section with id {sectionId} not found in trip with id {tripId}");
 
             return Ok(section);
         }
@@ -70,7 +70,7 @@ namespace Vecto.Api.Controllers
             if (!validation.IsValid) return BadRequest(validation);
 
             var trip = _tripsRepository.GetBy(tripId);
-            if (trip == null) return NotFound("trip not found");
+            if (trip is null) return NotFound("trip not found");
 
             var section = model.MapToSection();
             trip.Sections.Add(section);

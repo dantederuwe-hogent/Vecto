@@ -35,10 +35,10 @@ namespace Vecto.Api.Controllers
         public IActionResult Get()
         {
             string email = User.Identity.Name;
-            if (email == null) return Unauthorized();
+            if (email is null) return Unauthorized();
 
             var user = _userRepository.GetBy(email);
-            if (user == null) return BadRequest();
+            if (user is null) return BadRequest();
 
             return Ok(user.MapToDTO());
         }
@@ -47,11 +47,11 @@ namespace Vecto.Api.Controllers
         public async Task<IActionResult> Delete()
         {
             string email = User.Identity.Name;
-            if (email == null) return Unauthorized();
+            if (email is null) return Unauthorized();
 
             var user = _userRepository.GetBy(email);
             var identityUser = await _userManager.FindByNameAsync(email);
-            if (user == null || identityUser == null) return BadRequest();
+            if (user is null || identityUser is null) return BadRequest();
 
             // Delete User
             _userRepository.Delete(user);
@@ -68,14 +68,14 @@ namespace Vecto.Api.Controllers
         public async Task<IActionResult> Update(ProfileDTO profileDTO)
         {
             string email = User.Identity.Name;
-            if (email == null) return Unauthorized();
+            if (email is null) return Unauthorized();
 
             var validation = await _profileValidator.ValidateAsync(profileDTO);
             if (!validation.IsValid) return BadRequest(validation);
 
             var user = _userRepository.GetBy(email);
             var identityUser = await _userManager.FindByNameAsync(email);
-            if (user == null || identityUser == null) return BadRequest();
+            if (user is null || identityUser is null) return BadRequest();
 
             // Update User
             user.UpdateWith(profileDTO);
