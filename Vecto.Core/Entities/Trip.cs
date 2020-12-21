@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Vecto.Core.Interfaces;
 
 namespace Vecto.Core.Entities
 {
@@ -10,7 +9,7 @@ namespace Vecto.Core.Entities
         public DateTime? StartDateTime { get; set; }
         public DateTime? EndDateTime { get; set; }
 
-        public IList<ISection> Sections { get; } = new List<ISection>();
+        public IList<Section> Sections { get; } = new List<Section>();
 
         public Trip() { }
     }
