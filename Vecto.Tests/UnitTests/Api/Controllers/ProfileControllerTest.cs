@@ -8,24 +8,22 @@ using System.Threading.Tasks;
 using Vecto.Api.Controllers;
 using Vecto.Application.Profile;
 using Vecto.Core.Interfaces;
-using Vecto.Infrastructure;
 using Vecto.Infrastructure.Data;
+using Vecto.Tests.UnitTests.Helpers;
 using Xunit;
 
 namespace Vecto.Tests.UnitTests.Api.Controllers
 {
     public class ProfileControllerTest
     {
-        private readonly IUserRepository _userRepository;
+        private readonly IUserRepository _userRepository = Substitute.For<IUserRepository>();
+        private readonly IValidator<ProfileDTO> _profileValidator = Substitute.For<IValidator<ProfileDTO>>();
+        private readonly UserManager<IdentityUser> _um = Substitute.For<FakeUserManager>();
+        
         private readonly ProfileController _sut;
-        private readonly IValidator<ProfileDTO> _profileValidator;
-        private readonly UserManager<IdentityUser> _um;
 
         public ProfileControllerTest()
         {
-            _profileValidator = Substitute.For<IValidator<ProfileDTO>>();
-            _um = Substitute.For<FakeUserManager>();
-            _userRepository = Substitute.For<IUserRepository>();
             _sut = new ProfileController(_userRepository, _um, _profileValidator);
         }
 
@@ -34,16 +32,14 @@ namespace Vecto.Tests.UnitTests.Api.Controllers
         {
             // Arrange 
             var user = DummyData.UserFaker.Generate();
-
             _sut.ControllerContext = FakeControllerContext.GetLoggedInUserContextFor(user);
-
             _userRepository.GetBy(user.Email).Returns(user);
 
             // Act 
             var result = _sut.Get();
 
             // Assert 
-            result.Should().BeOfType<OkObjectResult>().Which.Value.Should().BeEquivalentTo(user.MapToDTO());
+            result.Should().BeOkObjectEquivalentTo(user.MapToDTO());
             _userRepository.Received().GetBy(user.Email);
         }
 
@@ -55,6 +51,7 @@ namespace Vecto.Tests.UnitTests.Api.Controllers
 
             // Act 
             var result = _sut.Get();
+            
             // Assert 
             result.Should().BeOfType<UnauthorizedResult>();
         }
@@ -65,7 +62,6 @@ namespace Vecto.Tests.UnitTests.Api.Controllers
             // Arrange 
             var user = DummyData.UserFaker.Generate();
             _sut.ControllerContext = FakeControllerContext.GetLoggedInUserContextFor(user);
-
             _userRepository.GetBy(user.Email).ReturnsNull();
 
             // Act 
@@ -81,12 +77,9 @@ namespace Vecto.Tests.UnitTests.Api.Controllers
             // Arrange 
             var user = DummyData.UserFaker.Generate();
             var identityUser = user.MapToIdentityUser();
-
             _um.FindByNameAsync(identityUser.Email).Returns(identityUser);
             _um.DeleteAsync(identityUser).Returns(IdentityResult.Success);
-
             _sut.ControllerContext = FakeControllerContext.GetLoggedInUserContextFor(user);
-
             _userRepository.GetBy(user.Email).Returns(user);
 
             // Act 
@@ -103,7 +96,6 @@ namespace Vecto.Tests.UnitTests.Api.Controllers
         {
             // Arrange 
             var user = DummyData.UserFaker.Generate();
-
             _sut.ControllerContext = FakeControllerContext.GetLoggedInUserContextFor(user);
             _userRepository.GetBy(user.Email).ReturnsNull();
 
@@ -118,7 +110,6 @@ namespace Vecto.Tests.UnitTests.Api.Controllers
         {
             // Arrange 
             var user = DummyData.UserFaker.Generate();
-
             _sut.ControllerContext = FakeControllerContext.NoLoggedInUserContext;
             _userRepository.GetBy(user.Email).ReturnsNull();
 
@@ -147,7 +138,7 @@ namespace Vecto.Tests.UnitTests.Api.Controllers
             var result = await _sut.Update(updateProfileDTO);
 
             // Assert 
-            result.Should().BeOfType<OkObjectResult>().Which.Value.Should().BeEquivalentTo(user.MapToDTO());
+            result.Should().BeOkObjectEquivalentTo(user.MapToDTO());
             _userRepository.Received().Update(user);
             _userRepository.Received().SaveChanges();
         }
@@ -158,11 +149,9 @@ namespace Vecto.Tests.UnitTests.Api.Controllers
             // Arrange 
             var updateProfileDTO = DummyData.ProfileDTOFaker.Generate();
             var user = DummyData.UserFaker.Generate();
-
             _sut.ControllerContext = FakeControllerContext.GetLoggedInUserContextFor(user);
             _profileValidator.SetupFail();
-
-
+            
             // Act 
             var result = await _sut.Update(updateProfileDTO);
 

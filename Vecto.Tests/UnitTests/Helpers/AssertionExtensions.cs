@@ -7,14 +7,19 @@ namespace Vecto.Tests.UnitTests.Helpers
 {
     public static class AssertionExtensions
     {
-        public static AndConstraint<StringAssertions> BeJwtToken(this StringAssertions assertions)
+        public static void BeJwtToken(this StringAssertions assertions)
         {
-            return assertions.MatchRegex("^[A-Za-z0-9-_=]+\\.[A-Za-z0-9-_=]+\\.?[A-Za-z0-9-_.+/=]*$");
+            assertions.MatchRegex("^[A-Za-z0-9-_=]+\\.[A-Za-z0-9-_=]+\\.?[A-Za-z0-9-_.+/=]*$");
         }
 
-        public static AndConstraint<StringAssertions> BeOkTokenResponse(this ObjectAssertions assertions)
+        public static void BeOkTokenResponse(this ObjectAssertions assertions)
         {
-            return assertions.BeOfType<OkObjectResult>().Which.Value.ToString().Should().BeJwtToken();
+            assertions.BeOfType<OkObjectResult>().Which.Value.ToString().Should().BeJwtToken();
+        }
+
+        public static void BeOkObjectEquivalentTo(this ObjectAssertions assertions, object expectation)
+        {
+            assertions.BeOfType<OkObjectResult>().Which.Value.Should().BeEquivalentTo(expectation);
         }
     }
 }
