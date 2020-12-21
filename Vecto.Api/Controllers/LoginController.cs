@@ -20,7 +20,12 @@ namespace Vecto.Api.Controllers
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly IConfiguration _configuration;
 
-        public LoginController(IValidator<LoginDTO> loginValidator, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, IConfiguration configuration)
+        public LoginController(
+            IValidator<LoginDTO> loginValidator,
+            UserManager<IdentityUser> userManager,
+            SignInManager<IdentityUser> signInManager,
+            IConfiguration configuration
+        )
         {
             _loginValidator = loginValidator;
             _userManager = userManager;
