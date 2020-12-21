@@ -3,20 +3,28 @@ using Vecto.Application.Trips;
 using Vecto.UWP.Services;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Navigation;
 
 namespace Vecto.UWP.Pages
 {
     public sealed partial class TripsPage : Page
     {
         private readonly IApiService _service;
+
+        private NavigationView _navigationView;
+
         public TripsPage()
         {
             _service = CustomRefitService.ForAuthenticated<IApiService>();
             this.InitializeComponent();
         }
 
-        private async void Page_Loaded(object sender, RoutedEventArgs e)
+        protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
+            base.OnNavigatedTo(e);
+
+            _navigationView = (NavigationView)e.Parameter;
+
             var trips = await _service.GetTrips();
             cvsTrips.Source = trips;
         }
@@ -40,6 +48,14 @@ namespace Vecto.UWP.Pages
 
                 cvsTrips.Source = await _service.AddTrip(newTrip);
             }
+        }
+
+        private void GridView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            var trip = (TripDTO)e.ClickedItem;
+            _navigationView.Header = trip.Name;
+            _navigationView.IsBackButtonVisible = NavigationViewBackButtonVisible.Visible;
+            Frame.Navigate(typeof(TripDetailsPage), trip);
         }
     }
 }

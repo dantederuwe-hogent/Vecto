@@ -9,7 +9,7 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <NavigationView PaneDisplayMode="Top" Name="VectoNavigationView" ItemInvoked="NavigationView_ItemInvoked">
+        <NavigationView PaneDisplayMode="Top" IsBackButtonVisible="Collapsed" IsBackEnabled="True" BackRequested="VectoNavigationView_BackRequested" Name="VectoNavigationView" ItemInvoked="NavigationView_ItemInvoked">
             <NavigationView.MenuItems>
                 <NavigationViewItem Icon="World" Content="Trips" Tag="trips" Name="TripsNavItem" />
                 <NavigationViewItem Icon="Contact" Tag="profile" Name="ProfileNavItem" Loaded="ProfileNavItem_Loaded" />

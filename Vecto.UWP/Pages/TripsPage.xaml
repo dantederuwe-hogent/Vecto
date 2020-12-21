@@ -8,7 +8,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-    Loaded="Page_Loaded"
     >
 
     <Page.Resources>
@@ -27,7 +26,7 @@
                 <TextBlock Text="Add Trip" />
             </StackPanel>
         </Button>
-        <GridView Grid.Row="1" ItemsSource="{Binding Source={StaticResource cvsTrips}}" >
+        <GridView Grid.Row="1" ItemsSource="{Binding Source={StaticResource cvsTrips}}" IsItemClickEnabled="True" ItemClick="GridView_ItemClick" >
             <GridView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Width="300" Padding="20" Background="{ThemeResource SystemListLowColor}">

@@ -1,6 +1,8 @@
-﻿using Vecto.UWP.Services;
+﻿using System;
+using Vecto.UWP.Services;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media.Animation;
 
 namespace Vecto.UWP.Pages
 {
@@ -16,7 +18,7 @@ namespace Vecto.UWP.Pages
             // Select trips page by default
             VectoNavigationView.SelectedItem = TripsNavItem;
             VectoNavigationView.Header = "My Trips";
-            ContentFrame.Navigate(typeof(TripsPage));
+            ContentFrame.Navigate(typeof(TripsPage), VectoNavigationView);
         }
 
         private async void ProfileNavItem_Loaded(object sender, RoutedEventArgs e)
@@ -41,10 +43,16 @@ namespace Vecto.UWP.Pages
                     VectoNavigationView.Header = "My Profile";
                     return;
                 case "trips":
-                    ContentFrame.Navigate(typeof(TripsPage));
+                    ContentFrame.Navigate(typeof(TripsPage), VectoNavigationView);
                     VectoNavigationView.Header = "My Trips";
                     return;
             }
+        }
+
+        private void VectoNavigationView_BackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)
+        {
+            VectoNavigationView.IsBackButtonVisible = NavigationViewBackButtonVisible.Collapsed;
+            Frame.Navigate(typeof(MainPage), null, new SuppressNavigationTransitionInfo());
         }
     }
 }
