@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using FluentValidation;
+﻿using FluentValidation;
 using Vecto.Application.Helpers;
 using Vecto.Core.Entities;
 

@@ -1,5 +1,4 @@
-﻿using Bogus.Extensions;
-using FluentAssertions;
+﻿using FluentAssertions;
 using FluentAssertions.Primitives;
 using Microsoft.AspNetCore.Mvc;
 

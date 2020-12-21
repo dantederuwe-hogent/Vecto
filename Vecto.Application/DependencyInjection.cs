@@ -5,7 +5,6 @@ using Vecto.Application.Login;
 using Vecto.Application.Profile;
 using Vecto.Application.Register;
 using Vecto.Application.Sections;
-using Vecto.Core.Entities;
 
 namespace Vecto.Application
 {

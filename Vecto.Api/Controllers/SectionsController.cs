@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using FluentValidation;
 using Vecto.Application.Helpers;
 using Vecto.Application.Sections;
-using Vecto.Application.Trips;
 using Vecto.Core.Entities;
 using Vecto.Core.Interfaces;
 
