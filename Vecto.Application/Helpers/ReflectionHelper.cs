@@ -13,5 +13,10 @@ namespace Vecto.Application.Helpers
         {
             return type.Assembly.DefinedTypes.Where(t=>t.IsSubclassOf(type)).ToList();
         }
+        
+        public static List<string> GetSubtypeNamesInSameAssembly(this Type type)
+        {
+            return GetSubtypesInSameAssembly(type).Select(s => s.Name).ToList();
+        }
     }
 }

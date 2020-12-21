@@ -4,7 +4,10 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using FluentValidation;
 using Vecto.Application.Helpers;
+using Vecto.Application.Sections;
 using Vecto.Application.Trips;
 using Vecto.Core.Entities;
 using Vecto.Core.Interfaces;
@@ -20,11 +23,13 @@ namespace Vecto.Api.Controllers
     {
         private readonly ITripRepository _tripsRepository;
         private readonly IUserRepository _userRepository;
+        private readonly IValidator<SectionDTO> _sectionValidator;
 
-        public SectionsController(ITripRepository tripsRepository, IUserRepository userRepository)
+        public SectionsController(ITripRepository tripsRepository, IUserRepository userRepository, IValidator<SectionDTO> sectionValidator)
         {
             _tripsRepository = tripsRepository;
             _userRepository = userRepository;
+            _sectionValidator = sectionValidator;
         }
 
         [HttpGet("")]
@@ -55,15 +60,17 @@ namespace Vecto.Api.Controllers
         }
 
         [HttpPost("")]
-        public IActionResult Add(Guid tripId, string name, bool todo)
+        public async Task<IActionResult> Add(Guid tripId, [FromBody] SectionDTO model)
         {
-            Section section;
-            if (todo) section = new TodoSection() { Name = name };
-            else section = new PackingSection() { Name = name };
-
+            var validation = await _sectionValidator.ValidateAsync(model);
+            if (!validation.IsValid) return BadRequest(validation);
+            
             var trip = _tripsRepository.GetBy(tripId);
+            if(trip == null) return NotFound("trip not found");
+            
+            var section = model.MapToSection();
             trip.Sections.Add(section);
-
+            
             _tripsRepository.Update(trip);
             _tripsRepository.SaveChanges();
 
