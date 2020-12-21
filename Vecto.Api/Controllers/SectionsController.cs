@@ -2,7 +2,9 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Vecto.Application.Helpers;
 using Vecto.Application.Trips;
 using Vecto.Core.Entities;
 using Vecto.Core.Interfaces;
@@ -66,6 +68,13 @@ namespace Vecto.Api.Controllers
             _tripsRepository.SaveChanges();
 
             return Ok(trip.Sections);
+        }
+
+        [HttpGet("/api/sections/types")]
+        [AllowAnonymous]
+        public IEnumerable<string> GetTypeNames()
+        {
+            return typeof(Section).GetSubtypesInSameAssembly().Select(s => s.Name);
         }
     }
 }
