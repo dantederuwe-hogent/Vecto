@@ -1,12 +1,12 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using System;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using NSubstitute;
-using System;
 
-namespace Vecto.Tests.UnitTests.Api
+namespace Vecto.Tests.UnitTests.Helpers
 {
     public class FakeSignInManager : SignInManager<IdentityUser>
     {

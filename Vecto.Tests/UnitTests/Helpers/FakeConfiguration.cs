@@ -1,7 +1,7 @@
-﻿using Microsoft.Extensions.Configuration;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Microsoft.Extensions.Configuration;
 
-namespace Vecto.Tests.UnitTests.Api
+namespace Vecto.Tests.UnitTests.Helpers
 {
     static class FakeConfiguration
     {

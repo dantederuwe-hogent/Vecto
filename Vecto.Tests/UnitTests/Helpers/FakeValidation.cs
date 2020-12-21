@@ -1,9 +1,9 @@
-﻿using FluentValidation;
+﻿using System.Collections.Generic;
+using FluentValidation;
 using FluentValidation.Results;
 using NSubstitute;
-using System.Collections.Generic;
 
-namespace Vecto.Tests.UnitTests.Api
+namespace Vecto.Tests.UnitTests.Helpers
 {
     public static class FakeValidation
     {
