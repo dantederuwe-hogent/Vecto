@@ -1,9 +1,10 @@
-﻿using Bogus.Extensions;
+using Bogus.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Vecto.Api.Helpers;
 using Vecto.Application.Register;
 using Vecto.Core.Entities;
@@ -76,6 +77,22 @@ namespace Vecto.Api.Controllers
             if (!sure) return BadRequest("you should be sure about this");
             _dbContext.Database.EnsureDeleted();
             _dbContext.Database.EnsureCreated();
+            return Ok("it has been done");
+        }
+        
+        [HttpPost("deletedatabase/{sure}")]
+        public IActionResult DeleteDatabase(bool sure)
+        {
+            if (!sure) return BadRequest("you should be sure about this");
+            _dbContext.Database.EnsureDeleted();
+            return Ok("it has been done, please restart your application!");
+        }
+        
+        [HttpPost("migratedatabase/{sure}")]
+        public IActionResult MigrateDatabase(bool sure)
+        {
+            if (!sure) return BadRequest("you should be sure about this");
+            _dbContext.Database.Migrate();
             return Ok("it has been done");
         }
     }
