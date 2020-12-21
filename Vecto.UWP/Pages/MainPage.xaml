@@ -9,10 +9,14 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <NavigationView>
+        <NavigationView PaneDisplayMode="Top" IsBackButtonVisible="Collapsed" IsBackEnabled="True" BackRequested="VectoNavigationView_BackRequested" Name="VectoNavigationView" ItemInvoked="NavigationView_ItemInvoked">
             <NavigationView.MenuItems>
-                <NavigationViewItem Icon="Contact" Name="ProfileNavItem" Loaded="ProfileNavItem_Loaded" />
+                <NavigationViewItem Icon="World" Content="Trips" Tag="trips" Name="TripsNavItem" />
+                <NavigationViewItem Icon="Contact" Tag="profile" Name="ProfileNavItem" Loaded="ProfileNavItem_Loaded" />
             </NavigationView.MenuItems>
+            <ScrollViewer>
+                <Frame Name="ContentFrame" Padding="12,0,12,24" IsTabStop="True" />
+            </ScrollViewer>
         </NavigationView>
     </Grid>
 </Page>

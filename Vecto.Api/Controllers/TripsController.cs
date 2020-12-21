@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using FluentValidation;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Linq;
 using Vecto.Application.Trips;
-using Vecto.Core.Entities;
 using Vecto.Core.Interfaces;
 
 namespace Vecto.Api.Controllers
@@ -28,7 +25,7 @@ namespace Vecto.Api.Controllers
         }
         
         [HttpGet("")]
-        public ActionResult<IList<Trip>> GetAll()
+        public IActionResult GetAll()
         {
             var user = _userRepository.GetBy(User.Identity.Name);
             if (user == null) return BadRequest();
@@ -37,7 +34,7 @@ namespace Vecto.Api.Controllers
         }
         
         [HttpGet("{id}")]
-        public ActionResult<IList<Trip>> GetBy(Guid id)
+        public IActionResult GetBy(Guid id)
         {
             var user = _userRepository.GetBy(User.Identity.Name);
             if (user == null) return BadRequest();
@@ -49,17 +46,17 @@ namespace Vecto.Api.Controllers
         }
 
         [HttpPost("")]
-        public ActionResult<IList<TripDTO>> Add([FromBody]TripDTO model)
+        public IActionResult Add([FromBody]TripDTO model)
         {
             var user = _userRepository.GetBy(User.Identity.Name);
             user.Trips.Add(model.MapToTrip());
             _userRepository.Update(user);
             _userRepository.SaveChanges();
-            return RedirectToAction("GetAll");
+            return Ok(user.Trips);
         }
 
         [HttpPatch("{id}")]
-        public ActionResult<Trip> Update(Guid id, [FromBody] TripDTO model)
+        public IActionResult Update(Guid id, [FromBody] TripDTO model)
         {
             var user = _userRepository.GetBy(User.Identity.Name);
             if (user == null) return BadRequest();
