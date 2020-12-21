@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Vecto.Api.Helpers;
 using Vecto.Application.Register;
+using Vecto.Application.Sections;
 using Vecto.Core.Entities;
 using Vecto.Core.Interfaces;
 using Vecto.Infrastructure.Data;
@@ -54,8 +55,11 @@ namespace Vecto.Api.Controllers
             if (!result.Succeeded) return BadRequest();
 
             var user = model.MapToUser();
-            ((List<Trip>) user.Trips).AddRange(DummyData.TripFaker.GenerateBetween(2, 6));
+
+            var trips = DummyData.TripFaker.GenerateBetween(2, 6);
+            trips.ForEach(t=> t.Sections.Add(DummyData.SectionDTOFaker.Generate().MapToSection()));
             
+            ((List<Trip>) user.Trips).AddRange(trips);
             _userRepository.Add(user);
             _userRepository.SaveChanges();
 

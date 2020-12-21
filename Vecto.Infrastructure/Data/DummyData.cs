@@ -1,7 +1,9 @@
 ﻿using Bogus;
+using Vecto.Application.Helpers;
 using Vecto.Application.Login;
 using Vecto.Application.Profile;
 using Vecto.Application.Register;
+using Vecto.Application.Sections;
 using Vecto.Core.Entities;
 
 namespace Vecto.Infrastructure.Data
@@ -34,5 +36,8 @@ namespace Vecto.Infrastructure.Data
             .RuleFor(u => u.EndDateTime, (f, trip) => trip.StartDateTime?.AddDays(f.Random.Int(2, 20)))
             .RuleFor(u => u.Name, (f, trip) => $"{f.Address.City()}, {trip.StartDateTime?.Year}");
 
+        public static readonly Faker<SectionDTO> SectionDTOFaker = new Faker<SectionDTO>()
+            .RuleFor(s => s.Name, f => f.Random.Word())
+            .RuleFor(s => s.SectionType, f => f.PickRandom(typeof(Section).GetSubtypeNamesInSameAssembly()));
     }
 }
