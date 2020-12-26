@@ -20,7 +20,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <Button Grid.Row="0" Click="AddTripButton_Click">
+        <Button Grid.Row="0" Name="AddTripButton" Click="AddTripButton_Click">
             <StackPanel Orientation="Horizontal" Spacing="4">
                 <TextBlock VerticalAlignment="Center" FontFamily="Segoe MDL2 Assets" Text="&#xE710;" />
                 <TextBlock Text="Add Trip" />

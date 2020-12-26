@@ -28,6 +28,14 @@ namespace Vecto.UWP.Pages
 
             var trips = await _service.GetTrips();
             cvsTrips.Source = trips;
+
+            /*
+             * TODO: This is an ugly fix at the moment, but it works
+             * 
+             * Fixes an issue where by default the application default focuses
+             * the trips item on the navigation view, giving it an ugly border...
+             */
+            AddTripButton.Focus(FocusState.Pointer);
         }
 
         private async void AddTripButton_Click(object sender, RoutedEventArgs e)
