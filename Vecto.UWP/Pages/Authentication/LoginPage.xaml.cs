@@ -37,10 +37,7 @@ namespace Vecto.UWP.Pages.Authentication
             }
             else
             {
-                /* 
-                 * if password was stored previously, fill in fields automatically
-                 * probably want to change this to automatically log in when we have a sign out button
-                 */
+                // automatic login if credential found (remember me was checked previously)
                 var credential = GetCredential();
                 if (credential != null)
                 {
@@ -49,18 +46,24 @@ namespace Vecto.UWP.Pages.Authentication
                     EmailTextBox.Text = credential.UserName;
                     PasswordBox.Password = credential.Password;
                     RememberMe.IsChecked = true;
+
+                    AttemptLogin(credential.UserName, credential.Password, true);
                 }
             }
         }
 
-        private async void LoginButton_Click(object sender, RoutedEventArgs e)
+        private void LoginButton_Click(object sender, RoutedEventArgs e)
+        {
+            AttemptLogin(EmailTextBox.Text, PasswordBox.Password, RememberMe.IsChecked ?? false);
+        }
+
+        private async void AttemptLogin(string email, string password, bool rememberMe)
         {
             try
             {
                 LoginProgressRing.Visibility = Visibility.Visible;
 
-                var model = new LoginDTO() { Email = EmailTextBox.Text, Password = PasswordBox.Password };
-                bool rememberMe = RememberMe.IsChecked ?? false;
+                var model = new LoginDTO() { Email = email, Password = password };
 
                 string token = await _service.Login(model);
 
