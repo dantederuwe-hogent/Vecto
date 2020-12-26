@@ -59,6 +59,7 @@ namespace Vecto.UWP.Pages.Authentication
 
         private async void AttemptLogin(string email, string password, bool rememberMe)
         {
+            LoginButton.IsEnabled = false;
             try
             {
                 LoginProgressRing.Visibility = Visibility.Visible;
@@ -85,6 +86,7 @@ namespace Vecto.UWP.Pages.Authentication
             finally
             {
                 LoginProgressRing.Visibility = Visibility.Collapsed;
+                LoginButton.IsEnabled = true;
             }
         }
 
