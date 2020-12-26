@@ -9,5 +9,6 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
+        <Button Content="Log out" Click="LogOutButton_Click" />
     </Grid>
 </Page>
