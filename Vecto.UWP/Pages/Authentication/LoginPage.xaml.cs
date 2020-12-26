@@ -1,4 +1,4 @@
-﻿using Refit;
+using Refit;
 using System;
 using System.Net.Http;
 using Vecto.Application.Login;
@@ -97,7 +97,7 @@ namespace Vecto.UWP.Pages.Authentication
 
         private void ClearCredential()
         {
-            _passwordVault.Remove(GetCredential());
+            if (GetCredential() != null) _passwordVault.Remove(GetCredential());
         }
 
         private void StoreToken(string token)
