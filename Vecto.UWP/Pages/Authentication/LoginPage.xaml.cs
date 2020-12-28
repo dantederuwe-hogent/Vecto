@@ -5,8 +5,10 @@ using Vecto.Application.Login;
 using Vecto.UWP.Services;
 using Windows.Security.Credentials;
 using Windows.Storage;
+using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 
@@ -93,6 +95,12 @@ namespace Vecto.UWP.Pages.Authentication
         private void CreateAccount_Click(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(RegisterPage), null, new SuppressNavigationTransitionInfo());
+        }
+
+        private void Page_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == VirtualKey.Enter)
+                AttemptLogin(EmailTextBox.Text, PasswordBox.Password, RememberMe.IsChecked ?? false);
         }
 
         private void StoreCredential(LoginDTO model)
