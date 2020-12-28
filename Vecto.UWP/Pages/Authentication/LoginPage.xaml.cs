@@ -1,12 +1,14 @@
-﻿using Refit;
+using Refit;
 using System;
 using System.Net.Http;
 using Vecto.Application.Login;
 using Vecto.UWP.Services;
 using Windows.Security.Credentials;
 using Windows.Storage;
+using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 
@@ -37,10 +39,7 @@ namespace Vecto.UWP.Pages.Authentication
             }
             else
             {
-                /* 
-                 * if password was stored previously, fill in fields automatically
-                 * probably want to change this to automatically log in when we have a sign out button
-                 */
+                // automatic login if credential found (remember me was checked previously)
                 var credential = GetCredential();
                 if (credential != null)
                 {
@@ -49,18 +48,27 @@ namespace Vecto.UWP.Pages.Authentication
                     EmailTextBox.Text = credential.UserName;
                     PasswordBox.Password = credential.Password;
                     RememberMe.IsChecked = true;
+
+                    AttemptLogin(credential.UserName, credential.Password, true);
                 }
             }
+
+            EmailTextBox.Select(EmailTextBox.Text.Length, 0); // move cursor to end of textbox
         }
 
-        private async void LoginButton_Click(object sender, RoutedEventArgs e)
+        private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
+            AttemptLogin(EmailTextBox.Text, PasswordBox.Password, RememberMe.IsChecked ?? false);
+        }
+
+        private async void AttemptLogin(string email, string password, bool rememberMe)
+        {
+            LoginButton.IsEnabled = false;
             try
             {
                 LoginProgressRing.Visibility = Visibility.Visible;
 
-                var model = new LoginDTO() { Email = EmailTextBox.Text, Password = PasswordBox.Password };
-                bool rememberMe = RememberMe.IsChecked ?? false;
+                var model = new LoginDTO() { Email = email, Password = password };
 
                 string token = await _service.Login(model);
 
@@ -82,12 +90,19 @@ namespace Vecto.UWP.Pages.Authentication
             finally
             {
                 LoginProgressRing.Visibility = Visibility.Collapsed;
+                LoginButton.IsEnabled = true;
             }
         }
 
         private void CreateAccount_Click(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(RegisterPage), null, new SuppressNavigationTransitionInfo());
+        }
+
+        private void Page_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == VirtualKey.Enter)
+                AttemptLogin(EmailTextBox.Text, PasswordBox.Password, RememberMe.IsChecked ?? false);
         }
 
         private void StoreCredential(LoginDTO model)
@@ -97,7 +112,7 @@ namespace Vecto.UWP.Pages.Authentication
 
         private void ClearCredential()
         {
-            _passwordVault.Remove(GetCredential());
+            if (GetCredential() != null) _passwordVault.Remove(GetCredential());
         }
 
         private void StoreToken(string token)

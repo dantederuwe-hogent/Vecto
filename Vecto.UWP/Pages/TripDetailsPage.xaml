@@ -5,10 +5,37 @@
     xmlns:local="using:Vecto.UWP.Pages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:converters="using:Vecto.UWP.Converters"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    
+    DataContext="{x:Bind _trip}">
+
+    <Page.Resources>
+        <converters:DateTimeConverter x:Key="DateTimeConverter" />
+    </Page.Resources>
 
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" Spacing="6" Grid.Row="0">
+            <Button Height="28" Content="Edit" Click="EditButton_Click" />
+            <TextBlock VerticalAlignment="Center" Text="{Binding StartDateTime, Converter={StaticResource DateTimeConverter}, ConverterParameter='dd MMMM yyyy'}" />
+            <TextBlock VerticalAlignment="Center" Text="—" />
+            <TextBlock VerticalAlignment="Center" Text="{Binding EndDateTime, Converter={StaticResource DateTimeConverter}, ConverterParameter='dd MMMM yyyy'}" />
+        </StackPanel>
 
+        <ContentDialog
+        Name="EditTripDialog"
+        Title="Edit Trip"
+        PrimaryButtonText="Apply"
+        CloseButtonText="Cancel">
+            <StackPanel Spacing="12" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                <TextBox Name="TripNameTextBox" Header="Name" />
+                <DatePicker Name="TripStartDatePicker" Header="Start Date" />
+                <DatePicker Name="TripEndDatePicker" Header="End Date" />
+            </StackPanel>
+        </ContentDialog>
     </Grid>
 </Page>

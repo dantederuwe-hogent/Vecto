@@ -1,5 +1,6 @@
 using System;
 using Vecto.Application.Trips;
+using Vecto.Core.Entities;
 using Vecto.UWP.Services;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -27,6 +28,14 @@ namespace Vecto.UWP.Pages
 
             var trips = await _service.GetTrips();
             cvsTrips.Source = trips;
+
+            /*
+             * TODO: This is an ugly fix at the moment, but it works
+             * 
+             * Fixes an issue where by default the application default focuses
+             * the trips item on the navigation view, giving it an ugly border...
+             */
+            AddTripButton.Focus(FocusState.Pointer);
         }
 
         private async void AddTripButton_Click(object sender, RoutedEventArgs e)
@@ -52,10 +61,10 @@ namespace Vecto.UWP.Pages
 
         private void GridView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            var trip = (TripDTO)e.ClickedItem;
+            var trip = (Trip)e.ClickedItem;
             _navigationView.Header = trip.Name;
             _navigationView.IsBackButtonVisible = NavigationViewBackButtonVisible.Visible;
-            Frame.Navigate(typeof(TripDetailsPage), trip);
+            Frame.Navigate(typeof(TripDetailsPage), new { trip, _navigationView });
         }
     }
 }

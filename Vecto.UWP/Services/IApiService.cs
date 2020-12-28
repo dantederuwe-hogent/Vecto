@@ -1,10 +1,12 @@
 ﻿using Refit;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Vecto.Application.Login;
 using Vecto.Application.Profile;
 using Vecto.Application.Register;
 using Vecto.Application.Trips;
+using Vecto.Core.Entities;
 
 namespace Vecto.UWP.Services
 {
@@ -20,9 +22,12 @@ namespace Vecto.UWP.Services
         Task<ProfileDTO> GetProfile();
 
         [Get("/trips")]
-        Task<IEnumerable<TripDTO>> GetTrips();
+        Task<IEnumerable<Trip>> GetTrips();
 
         [Post("/trips")]
         Task<IEnumerable<TripDTO>> AddTrip(TripDTO tripDTO);
+
+        [Patch("/trips/{id}")]
+        Task<Trip> UpdateTrip(Guid id, TripDTO tripDTO);
     }
 }
