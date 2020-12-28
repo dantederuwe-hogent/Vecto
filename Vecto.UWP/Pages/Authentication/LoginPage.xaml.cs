@@ -52,6 +52,8 @@ namespace Vecto.UWP.Pages.Authentication
                     AttemptLogin(credential.UserName, credential.Password, true);
                 }
             }
+
+            EmailTextBox.Select(EmailTextBox.Text.Length, 0); // move cursor to end of textbox
         }
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
