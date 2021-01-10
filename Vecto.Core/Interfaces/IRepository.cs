@@ -15,7 +15,7 @@ namespace Vecto.Core.Interfaces
     }
 
     public interface ITripRepository : IRepository<Trip> { }
-    
+
     public interface IUserRepository : IRepository<User>
     {
         public User GetBy(string email);

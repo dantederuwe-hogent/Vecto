@@ -9,29 +9,24 @@ using Vecto.Api.Controllers;
 using Vecto.Application.Register;
 using Vecto.Core.Entities;
 using Vecto.Core.Interfaces;
-using Vecto.Infrastructure;
 using Vecto.Infrastructure.Data;
+using Vecto.Tests.UnitTests.Helpers;
 using Xunit;
 
 namespace Vecto.Tests.UnitTests.Api.Controllers
 {
     public class RegisterControllerTest
     {
-        private readonly IUserRepository _userRepository;
+        private readonly IUserRepository _userRepository = Substitute.For<IUserRepository>();
+        private readonly UserManager<IdentityUser> _um = Substitute.For<FakeUserManager>();
+        private readonly IConfiguration _config = FakeConfiguration.Get();
+        private readonly IValidator<RegisterDTO> _registerValidator = Substitute.For<IValidator<RegisterDTO>>();
+
         private readonly RegisterController _sut;
-        private readonly UserManager<IdentityUser> _um;
-        private readonly IConfiguration _config;
-        private readonly IValidator<RegisterDTO> _registerValidator;
 
         public RegisterControllerTest()
         {
-            _userRepository = Substitute.For<IUserRepository>();
-            _um = Substitute.For<FakeUserManager>();
-            _config = FakeConfiguration.Get();
-            _registerValidator = Substitute.For<IValidator<RegisterDTO>>();
-
             _sut = new RegisterController(_userRepository, _config, _um, _registerValidator);
-
         }
 
         [Fact]
@@ -39,19 +34,16 @@ namespace Vecto.Tests.UnitTests.Api.Controllers
         {
             // Arrange
             var registerDTO = DummyData.RegisterDTOFaker.Generate();
-            _um.CreateAsync(Arg.Any<IdentityUser>(), Arg.Any<string>()).Returns(IdentityResult.Success);
+            _um.CreateAsync(default, default).ReturnsForAnyArgs(IdentityResult.Success);
             _registerValidator.SetupPass();
 
             // Act          
             var result = await _sut.Register(registerDTO);
 
             // Assert
-            result.Should().BeOfType<CreatedResult>()
-                .Which.Value.ToString().Should().MatchRegex("^[A-Za-z0-9-_=]+\\.[A-Za-z0-9-_=]+\\.?[A-Za-z0-9-_.+/=]*$");
-
+            result.Should().BeCreatedTokenResponse();
             _userRepository.Received().Add(Arg.Any<User>());
             _userRepository.Received().SaveChanges();
-
         }
 
         [Fact]
@@ -61,9 +53,8 @@ namespace Vecto.Tests.UnitTests.Api.Controllers
             var user = DummyData.UserFaker.Generate();
             var registerDTO = DummyData.RegisterDTOFaker.Generate();
             registerDTO.Email = user.Email;
-
             _registerValidator.SetupPass();
-            _userRepository.GetBy(user.Email).Returns(user); //already registered
+            _userRepository.GetBy(user.Email).Returns(user); //!
 
             // Act     
             var secondTimeRegister = await _sut.Register(registerDTO);
@@ -81,7 +72,7 @@ namespace Vecto.Tests.UnitTests.Api.Controllers
             _registerValidator.SetupFail();
 
             // Act     
-            var secondTimeRegister = await _sut.Register(new RegisterDTO());
+            var secondTimeRegister = await _sut.Register(default);
 
             // Assert
             secondTimeRegister.Should().BeOfType<BadRequestObjectResult>();

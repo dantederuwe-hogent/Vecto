@@ -5,7 +5,6 @@ using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using Bogus.DataSets;
 
 namespace Vecto.Api.Helpers
 {
@@ -13,7 +12,7 @@ namespace Vecto.Api.Helpers
     {
         public static string GetToken(IdentityUser user, IConfiguration configuration, bool rememberMe = false)
         {
-        // Create the token
+            // Create the token
             var claims = new[]
             {
                 new Claim(JwtRegisteredClaimNames.Sub, user.Email),

@@ -1,5 +1,4 @@
-﻿using Vecto.Application.Register;
-using Vecto.Core.Entities;
+﻿using Vecto.Core.Entities;
 
 namespace Vecto.Application.Trips
 {

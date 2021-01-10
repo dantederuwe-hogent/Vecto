@@ -1,9 +1,9 @@
-﻿using FluentValidation;
+﻿using System.Collections.Generic;
+using FluentValidation;
 using FluentValidation.Results;
 using NSubstitute;
-using System.Collections.Generic;
 
-namespace Vecto.Tests.UnitTests.Api
+namespace Vecto.Tests.UnitTests.Helpers
 {
     public static class FakeValidation
     {
@@ -17,7 +17,7 @@ namespace Vecto.Tests.UnitTests.Api
         /// <summary>Generic method to setup a failing validator</summary>
         public static void SetupFail<T>(this IValidator<T> validator)
         {
-            var failures = new List<ValidationFailure>() {new ValidationFailure("TestProperty", "TestErrorMessage")};
+            var failures = new List<ValidationFailure>() { new ValidationFailure("TestProperty", "TestErrorMessage") };
             validator.Validate(Arg.Any<T>()).Returns(new ValidationResult(failures));
             validator.ValidateAsync(Arg.Any<T>()).Returns(new ValidationResult(failures));
         }

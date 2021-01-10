@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 using System.Security.Principal;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Vecto.Core.Entities;
 
-namespace Vecto.Tests.UnitTests.Api
+namespace Vecto.Tests.UnitTests.Helpers
 {
     public static class FakeControllerContext
     {

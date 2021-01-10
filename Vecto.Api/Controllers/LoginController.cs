@@ -20,7 +20,12 @@ namespace Vecto.Api.Controllers
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly IConfiguration _configuration;
 
-        public LoginController(IValidator<LoginDTO> loginValidator, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, IConfiguration configuration)
+        public LoginController(
+            IValidator<LoginDTO> loginValidator,
+            UserManager<IdentityUser> userManager,
+            SignInManager<IdentityUser> signInManager,
+            IConfiguration configuration
+        )
         {
             _loginValidator = loginValidator;
             _userManager = userManager;
@@ -36,7 +41,7 @@ namespace Vecto.Api.Controllers
             if (!validation.IsValid) return BadRequest(validation);
 
             var user = await _userManager.FindByNameAsync(model.Email);
-            if (user == null) return BadRequest();
+            if (user is null) return BadRequest();
 
             var result = await _signInManager.CheckPasswordSignInAsync(user, model.Password, false);
             if (!result.Succeeded) return BadRequest();
