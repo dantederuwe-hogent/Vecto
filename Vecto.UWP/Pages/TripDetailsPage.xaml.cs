@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
-using System.Threading.Tasks;
 using Vecto.Application.Sections;
 using Vecto.Application.Trips;
 using Vecto.Core.Entities;
@@ -19,7 +19,9 @@ namespace Vecto.UWP.Pages
         private Trip _trip;
         private IList<string> _sectionTypes;
         private NavigationView _navigationView;
-        
+
+        private readonly ObservableCollection<SectionDTO> Sections = new ObservableCollection<SectionDTO>();
+
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
@@ -32,21 +34,10 @@ namespace Vecto.UWP.Pages
 
             InitializeComponent(); //Initialize here
 
-
             var sections = await _service.GetTripSections(_trip.Id);
-            SetupSections(sections);
+            sections.ToList().ForEach(Sections.Add);
         }
 
-        private async Task SetupSections(IEnumerable<SectionDTO> sections, bool selectLastSection=false)
-        {
-            var last = SectionsPivot.Items?.Last();
-
-            SectionsPivot.Items?.Clear();
-            sections.ToList().ForEach(section => SectionsPivot.Items?.Add(new PivotItem {Header = section.Name}));
-            
-            SectionsPivot.Items?.Add(last);
-            SectionsPivot.SelectedIndex = selectLastSection ? SectionsPivot.Items.Count -2 : 0;
-        }
 
         private async void EditButton_Click(object sender, RoutedEventArgs e)
         {
@@ -77,8 +68,13 @@ namespace Vecto.UWP.Pages
             }
         }
 
-        private async void CreateSection_Click(object sender, RoutedEventArgs e)
+
+        private async void AddSectionButton_Click(object sender, RoutedEventArgs e)
         {
+
+            if (await AddSectionDialog.ShowAsync() != ContentDialogResult.Primary)
+                return;
+
             try
             {
                 var model = new SectionDTO()
@@ -87,9 +83,8 @@ namespace Vecto.UWP.Pages
                     SectionType = CreateSectionType.SelectedItem.ToString()
                 };
 
-                var sections = await _service.AddTripSection(_trip.Id, model);
-
-                await SetupSections(sections, true);
+                _ = await _service.AddTripSection(_trip.Id, model);
+                Sections.Add(model);
             }
             catch
             {

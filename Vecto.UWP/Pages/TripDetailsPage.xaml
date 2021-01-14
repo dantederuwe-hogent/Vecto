@@ -5,7 +5,9 @@
     xmlns:local="using:Vecto.UWP.Pages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:converters="using:Vecto.UWP.Converters"
+    xmlns:converters="using:Vecto.UWP.Converters" 
+    xmlns:entities="using:Vecto.Core.Entities" 
+    xmlns:sections="using:Vecto.Application.Sections"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     
@@ -20,26 +22,46 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
+
         <StackPanel Orientation="Horizontal" Spacing="6" Grid.Row="0">
-            <Button Height="28" Content="Edit" Click="EditButton_Click" />
             <TextBlock VerticalAlignment="Center" Text="{Binding StartDateTime, Converter={StaticResource DateTimeConverter}, ConverterParameter='dd MMMM yyyy'}" />
             <TextBlock VerticalAlignment="Center" Text="—" />
             <TextBlock VerticalAlignment="Center" Text="{Binding EndDateTime, Converter={StaticResource DateTimeConverter}, ConverterParameter='dd MMMM yyyy'}" />
+            <Button Height="28" Content="Edit" Click="EditButton_Click" />
+            <Button Height="28" Content="Add Section" Click="AddSectionButton_Click" />
         </StackPanel>
 
-        <Pivot Grid.Row="1" Margin="0 30 0 0" x:Name="SectionsPivot">
+        <Pivot Grid.Row="1" Margin="0 30 0 0" x:Name="SectionsPivot" ItemsSource="{x:Bind Sections}">
 
-            <PivotItem Header="+" x:Name="Add_Section">
-                <StackPanel Spacing="12">
-                    <TextBlock Text="Add a section"/>
-                    <TextBox Name="CreateSectionName" Header="Name" />
-                    <ComboBox Name="CreateSectionType" Header="Type" ItemsSource="{x:Bind _sectionTypes}" SelectedIndex="0"></ComboBox>
-                    <Button Content="Add" Click="CreateSection_Click"></Button>
-                </StackPanel>
-            </PivotItem>
+            <Pivot.HeaderTemplate>
+                <DataTemplate x:DataType="sections:SectionDTO">
+                    <TextBlock Text="{Binding Name}"/>
+                </DataTemplate>
+            </Pivot.HeaderTemplate>
+
+            <Pivot.ItemTemplate>
+                <DataTemplate x:DataType="sections:SectionDTO">
+                    <StackPanel Spacing="2" >
+                        <TextBlock Text="{Binding Name}"/>
+                        <TextBlock Text="{Binding SectionType}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </Pivot.ItemTemplate>
+
         </Pivot>
 
 
+        <ContentDialog
+            Name="AddSectionDialog"
+            Title="Add Section"
+            PrimaryButtonText="Add"
+            CloseButtonText="Cancel">
+            <StackPanel Spacing="12" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                <TextBlock Text="Add a section"/>
+                <TextBox Name="CreateSectionName" Header="Name" />
+                <ComboBox Name="CreateSectionType" Header="Type" ItemsSource="{x:Bind _sectionTypes}" SelectedIndex="0"></ComboBox>
+            </StackPanel>
+        </ContentDialog>
 
         <ContentDialog
         Name="EditTripDialog"
