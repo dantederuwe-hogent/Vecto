@@ -86,5 +86,20 @@ namespace Vecto.Api.Controllers
         {
             return typeof(Section).GetSubtypesInSameAssembly().Select(s => s.Name);
         }
+
+        [HttpDelete("sectionId")]
+        public IActionResult Delete(Guid tripId, Guid sectionId)
+        {
+            var trip = _tripsRepository.GetBy(tripId);
+            if (trip is null) return NotFound("trip not found");
+
+            var section = trip.Sections.SingleOrDefault(s => s.Id == sectionId);
+            if (section is null) return NotFound("section not found");
+
+            trip.Sections.Remove(section);
+            _tripsRepository.SaveChanges();
+
+            return Ok();
+        }
     }
 }
