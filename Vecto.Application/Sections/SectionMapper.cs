@@ -14,5 +14,10 @@ namespace Vecto.Application.Sections
                 _ => throw new ArgumentException("Section type is not valid", nameof(dto.SectionType))
             };
         }
+
+        public static void UpdateWith(this Section section, SectionDTO model)
+        {
+            section.Name = model.Name ?? section.Name;
+        }
     }
 }
