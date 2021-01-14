@@ -31,7 +31,7 @@
             <Button Height="28" Content="Add Section" Click="AddSectionButton_Click" />
         </StackPanel>
 
-        <Pivot Grid.Row="1" Margin="0 30 0 0" x:Name="SectionsPivot" ItemsSource="{x:Bind Sections}">
+        <Pivot Grid.Row="1" Margin="0 30 0 0" x:Name="SectionsPivot" ItemsSource="{x:Bind _sections}">
 
             <Pivot.HeaderTemplate>
                 <DataTemplate x:DataType="sections:SectionDTO">

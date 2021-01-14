@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using Vecto.Application.Sections;
 using Vecto.Application.Trips;
 using Vecto.Core.Entities;
@@ -17,10 +16,9 @@ namespace Vecto.UWP.Pages
         private readonly IApiService _service = CustomRefitService.ForAuthenticated<IApiService>();
 
         private Trip _trip;
-        private IList<string> _sectionTypes;
+        private IEnumerable<string> _sectionTypes;
         private NavigationView _navigationView;
-
-        private readonly ObservableCollection<SectionDTO> Sections = new ObservableCollection<SectionDTO>();
+        private ObservableCollection<SectionDTO> _sections;
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
@@ -32,10 +30,10 @@ namespace Vecto.UWP.Pages
 
             _sectionTypes = await _service.GetSectionTypes();
 
-            InitializeComponent(); //Initialize here
-
             var sections = await _service.GetTripSections(_trip.Id);
-            sections.ToList().ForEach(Sections.Add);
+            _sections = new ObservableCollection<SectionDTO>(sections);
+
+            InitializeComponent(); //Initialize here
         }
 
 
@@ -45,35 +43,32 @@ namespace Vecto.UWP.Pages
             TripStartDatePicker.Date = new DateTimeOffset((DateTime)_trip.StartDateTime);
             TripEndDatePicker.Date = new DateTimeOffset((DateTime)_trip.EndDateTime);
 
-            if (await EditTripDialog.ShowAsync() == ContentDialogResult.Primary)
+            if (await EditTripDialog.ShowAsync() != ContentDialogResult.Primary) return;
+
+            var editedTrip = new TripDTO
             {
-                var editedTrip = new TripDTO
-                {
-                    Name = TripNameTextBox.Text,
-                    StartDateTime = TripStartDatePicker.Date.DateTime,
-                    EndDateTime = TripEndDatePicker.Date.DateTime
-                };
+                Name = TripNameTextBox.Text,
+                StartDateTime = TripStartDatePicker.Date.DateTime,
+                EndDateTime = TripEndDatePicker.Date.DateTime
+            };
 
-                try
-                {
-                    _trip = await _service.UpdateTrip(_trip.Id, editedTrip);
+            try
+            {
+                _trip = await _service.UpdateTrip(_trip.Id, editedTrip);
 
-                    _navigationView.Header = _trip.Name;
-                    Bindings.Update();
-                }
-                catch (Exception)
-                {
-                    //TODO: Exception handling
-                }
+                _navigationView.Header = _trip.Name;
+                Bindings.Update();
+            }
+            catch
+            {
+                //TODO: Exception handling
             }
         }
 
 
         private async void AddSectionButton_Click(object sender, RoutedEventArgs e)
         {
-
-            if (await AddSectionDialog.ShowAsync() != ContentDialogResult.Primary)
-                return;
+            if (await AddSectionDialog.ShowAsync() != ContentDialogResult.Primary) return;
 
             try
             {
@@ -83,12 +78,12 @@ namespace Vecto.UWP.Pages
                     SectionType = CreateSectionType.SelectedItem.ToString()
                 };
 
-                _ = await _service.AddTripSection(_trip.Id, model);
-                Sections.Add(model);
+                await _service.AddTripSection(_trip.Id, model);
+                _sections.Add(model);
             }
             catch
             {
-                //TODO
+                //TODO: Exception handling
             }
         }
     }

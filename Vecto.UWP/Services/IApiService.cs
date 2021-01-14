@@ -41,6 +41,6 @@ namespace Vecto.UWP.Services
         Task<IEnumerable<SectionDTO>> AddTripSection(Guid tripId, [Body] SectionDTO model);
 
         [Get("/sections/types")]
-        Task<IList<string>> GetSectionTypes();
+        Task<IEnumerable<string>> GetSectionTypes();
     }
 }
