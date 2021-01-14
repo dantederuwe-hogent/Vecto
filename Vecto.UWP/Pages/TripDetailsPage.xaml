@@ -34,8 +34,15 @@
         <Pivot Grid.Row="1" Margin="0 30 0 0" x:Name="SectionsPivot" ItemsSource="{x:Bind _sections}">
 
             <Pivot.HeaderTemplate>
-                <DataTemplate x:DataType="sections:SectionDTO">
-                    <TextBlock Text="{Binding Name}"/>
+                <DataTemplate x:DataType="sections:SectionDTO" >
+                    <TextBlock Text="{Binding Name}" RightTapped="SectionHeaderRightTapped">
+                        <FlyoutBase.AttachedFlyout>
+                            <MenuFlyout>
+                                <MenuFlyoutItem Text="Edit" Icon="Edit" Click="EditSection_Click" />
+                                <MenuFlyoutItem Text="Delete" Icon="Delete" Click="DeleteSection_Click" />
+                            </MenuFlyout>
+                        </FlyoutBase.AttachedFlyout>
+                    </TextBlock>
                 </DataTemplate>
             </Pivot.HeaderTemplate>
 

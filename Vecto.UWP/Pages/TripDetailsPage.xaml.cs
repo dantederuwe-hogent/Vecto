@@ -7,6 +7,8 @@ using Vecto.Core.Entities;
 using Vecto.UWP.Services;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
 
 namespace Vecto.UWP.Pages
@@ -85,6 +87,21 @@ namespace Vecto.UWP.Pages
             {
                 //TODO: Exception handling
             }
+        }
+
+        private void SectionHeaderRightTapped(object sender, RightTappedRoutedEventArgs e)
+        {
+            FlyoutBase.ShowAttachedFlyout(sender as FrameworkElement);
+        }
+        
+        private void EditSection_Click(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void DeleteSection_Click(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
         }
     }
 }
