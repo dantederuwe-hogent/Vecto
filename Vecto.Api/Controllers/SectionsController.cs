@@ -86,5 +86,40 @@ namespace Vecto.Api.Controllers
         {
             return typeof(Section).GetSubtypesInSameAssembly().Select(s => s.Name);
         }
+
+        [HttpPatch("sectionId")]
+        public async Task<IActionResult> Update(Guid tripId, Guid sectionId, SectionDTO sectionDTO)
+        {
+            var validation = await _sectionValidator.ValidateAsync(sectionDTO);
+            if (!validation.IsValid) return BadRequest(validation);
+
+            var trip = _tripsRepository.GetBy(tripId);
+            if (trip is null) return NotFound("trip not found");
+
+            var section = trip.Sections.SingleOrDefault(s => s.Id == sectionId);
+            if (section is null) return NotFound("section not found");
+
+            section.UpdateWith(sectionDTO);
+
+            _tripsRepository.Update(trip);
+            _tripsRepository.SaveChanges();
+
+            return Ok();
+        }
+
+        [HttpDelete("sectionId")]
+        public IActionResult Delete(Guid tripId, Guid sectionId)
+        {
+            var trip = _tripsRepository.GetBy(tripId);
+            if (trip is null) return NotFound("trip not found");
+
+            var section = trip.Sections.SingleOrDefault(s => s.Id == sectionId);
+            if (section is null) return NotFound("section not found");
+
+            trip.Sections.Remove(section);
+            _tripsRepository.SaveChanges();
+
+            return Ok();
+        }
     }
 }
