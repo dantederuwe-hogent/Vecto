@@ -34,7 +34,7 @@
         <Pivot Grid.Row="1" Margin="0 30 0 0" x:Name="SectionsPivot" ItemsSource="{x:Bind _sections}">
 
             <Pivot.HeaderTemplate>
-                <DataTemplate x:DataType="sections:SectionDTO" >
+                <DataTemplate x:DataType="entities:Section" >
                     <TextBlock Text="{Binding Name}" RightTapped="SectionHeaderRightTapped">
                         <FlyoutBase.AttachedFlyout>
                             <MenuFlyout>

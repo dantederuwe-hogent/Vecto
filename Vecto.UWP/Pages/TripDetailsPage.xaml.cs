@@ -21,7 +21,7 @@ namespace Vecto.UWP.Pages
         private Trip _trip;
         private IEnumerable<string> _sectionTypes;
         private NavigationView _navigationView;
-        private ObservableCollection<SectionDTO> _sections;
+        private ObservableCollection<Section> _sections;
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
@@ -34,7 +34,7 @@ namespace Vecto.UWP.Pages
             _sectionTypes = await _service.GetSectionTypes();
 
             var sections = await _service.GetTripSections(_trip.Id);
-            _sections = new ObservableCollection<SectionDTO>(sections);
+            _sections = new ObservableCollection<Section>(sections);
 
             InitializeComponent(); //Initialize here
         }
@@ -82,7 +82,7 @@ namespace Vecto.UWP.Pages
                 };
 
                 await _service.AddTripSection(_trip.Id, model);
-                _sections.Add(model);
+                _sections.Add(model.MapToSection());
             }
             catch
             {
@@ -108,13 +108,14 @@ namespace Vecto.UWP.Pages
         private void LoadItemsFrame(object sender, RoutedEventArgs e)
         {
             var frame = sender as Frame;
-            var selectedSection = SectionsPivot.SelectedItem as SectionDTO;
-            var sectionType = selectedSection.SectionType;
+            var selectedSection = SectionsPivot.SelectedItem as Section;
 
-            switch (sectionType)
+            var parameter = new {TripId = _trip.Id, SectionId = selectedSection.Id};
+
+            switch (selectedSection.SectionType)
             {
                 case "TodoSection":
-                    frame.Navigate(typeof(TodoSectionPage), SectionsPivot.SelectedIndex);
+                    frame.Navigate(typeof(TodoSectionPage), parameter);
                     return; 
                 //case "PackingSection":
                 //    frame.Navigate(typeof(PackingSectionPage));

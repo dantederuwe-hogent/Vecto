@@ -4,13 +4,13 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-    xmlns:entities="using:Vecto.Core.Entities"
+    xmlns:entities="using:Vecto.Core.Entities" 
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <TreeView ItemsSource="{x:Bind _todoItems}" SelectionMode="Multiple" CanDragItems="True" AllowDrop="True">
             <TreeView.ItemTemplate>
                 <DataTemplate x:DataType="entities:TodoItem">
-                    <TreeViewItem Content="{x:Bind Title}" />
+                    <TreeViewItem Content="{x:Bind Title}" IsSelected="{x:Bind Checked}"/>
                 </DataTemplate>
             </TreeView.ItemTemplate>
         </TreeView>

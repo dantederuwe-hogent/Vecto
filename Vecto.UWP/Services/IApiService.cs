@@ -35,12 +35,15 @@ namespace Vecto.UWP.Services
         Task<Trip> UpdateTrip(Guid id, TripDTO tripDTO);
 
         [Get("/trips/{tripId}/sections")]
-        Task<IEnumerable<SectionDTO>> GetTripSections(Guid tripId);
+        Task<IEnumerable<Section>> GetTripSections(Guid tripId);
 
         [Post("/trips/{tripId}/sections")]
-        Task<IEnumerable<SectionDTO>> AddTripSection(Guid tripId, [Body] SectionDTO model);
+        Task<IEnumerable<Section>> AddTripSection(Guid tripId, [Body] SectionDTO model);
 
         [Get("/sections/types")]
         Task<IEnumerable<string>> GetSectionTypes();
+
+        [Get("/trips/{tripId}/sections/{sectionId}/items")]
+        Task<IEnumerable<TodoItem>> GetTodoItems(Guid tripId, Guid sectionId);
     }
 }
