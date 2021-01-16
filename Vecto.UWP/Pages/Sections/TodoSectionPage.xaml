@@ -7,11 +7,16 @@
     xmlns:entities="using:Vecto.Core.Entities" 
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-    <TreeView ItemsSource="{x:Bind _todoItems}" SelectionMode="Multiple" CanDragItems="True" AllowDrop="True">
-            <TreeView.ItemTemplate>
-                <DataTemplate x:DataType="entities:TodoItem">
-                    <TreeViewItem Content="{x:Bind Title}" IsSelected="{x:Bind Checked}"/>
-                </DataTemplate>
-            </TreeView.ItemTemplate>
-        </TreeView>
+    <ListView ItemsSource="{x:Bind _todoItems}" >
+        <ListView.ItemTemplate>
+            <DataTemplate x:DataType="entities:TodoItem">
+                <CheckBox  
+                        Content="{x:Bind Title}"
+                        IsChecked="{x:Bind Checked}" 
+                        Checked="CheckBox_Toggle"
+                        Unchecked="CheckBox_Toggle"
+                        Tag="{x:Bind Id}"/>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>
 </Page>
