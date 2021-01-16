@@ -87,7 +87,7 @@ namespace Vecto.Api.Controllers
             return typeof(Section).GetSubtypesInSameAssembly().Select(s => s.Name);
         }
 
-        [HttpPatch("sectionId")]
+        [HttpPatch("{sectionId}")]
         public async Task<IActionResult> Update(Guid tripId, Guid sectionId, SectionDTO sectionDTO)
         {
             var validation = await _sectionValidator.ValidateAsync(sectionDTO);
@@ -107,7 +107,7 @@ namespace Vecto.Api.Controllers
             return Ok();
         }
 
-        [HttpDelete("sectionId")]
+        [HttpDelete("{sectionId}")]
         public IActionResult Delete(Guid tripId, Guid sectionId)
         {
             var trip = _tripsRepository.GetBy(tripId);
