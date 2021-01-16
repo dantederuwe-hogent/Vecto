@@ -7,16 +7,33 @@
     xmlns:entities="using:Vecto.Core.Entities" 
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-    <ListView ItemsSource="{x:Bind _todoItems}" >
-        <ListView.ItemTemplate>
-            <DataTemplate x:DataType="entities:TodoItem">
-                <CheckBox  
-                        Content="{x:Bind Title}"
-                        IsChecked="{x:Bind Checked}" 
-                        Checked="CheckBox_Toggle"
-                        Unchecked="CheckBox_Toggle"
-                        Tag="{x:Bind Id}"/>
-            </DataTemplate>
-        </ListView.ItemTemplate>
-    </ListView>
+    <StackPanel>
+        <ListView ItemsSource="{x:Bind _todoItems}" >
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="entities:TodoItem">
+                    <CheckBox  
+                            Content="{x:Bind Title}"
+                            IsChecked="{x:Bind Checked}" 
+                            Checked="CheckBox_Toggle"
+                            Unchecked="CheckBox_Toggle"
+                            Tag="{x:Bind Id}"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Button x:Name="AddTodo_Button" Content="Add Todo Item" Click="AddTodo_Button_OnClick"></Button>
+
+        <ContentDialog
+            Name="AddTodoDialog"
+            Title="Add Todo Item"
+            PrimaryButtonText="Add"
+            CloseButtonText="Cancel">
+            <StackPanel Spacing="12" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                <TextBlock Text="Add Todo Item"/>
+                <TextBox Name="AddTodoName" Header="Title" />
+                <TextBox Name="AddTodoDesc" Header="Description" />
+            </StackPanel>
+        </ContentDialog>
+    </StackPanel>
 </Page>
+
+    

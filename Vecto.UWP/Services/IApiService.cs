@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Vecto.Application.Items;
 using Vecto.Application.Login;
 using Vecto.Application.Profile;
 using Vecto.Application.Register;
@@ -45,6 +46,9 @@ namespace Vecto.UWP.Services
 
         [Get("/trips/{tripId}/sections/{sectionId}/items")]
         Task<IEnumerable<TodoItem>> GetTodoItems(Guid tripId, Guid sectionId);
+
+        [Post("/trips/{tripId}/sections/{sectionId}/items")]
+        Task<TodoItem> AddTodoItem(Guid tripId, Guid sectionId, [Body] ItemDTO model);
 
         [Post("/trips/{tripId}/sections/{sectionId}/items/{itemId}/toggle")]
         Task ToggleItem(Guid tripId, Guid sectionId, Guid itemId);
