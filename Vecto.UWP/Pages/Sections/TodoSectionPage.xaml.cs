@@ -5,6 +5,8 @@ using Vecto.Core.Entities;
 using Vecto.UWP.Services;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
 
 namespace Vecto.UWP.Pages.Sections
@@ -31,15 +33,26 @@ namespace Vecto.UWP.Pages.Sections
 
         private async void CheckBox_Toggle(object sender, RoutedEventArgs e)
         {
-            var cb = sender as CheckBox;
-            if (cb.Tag is null) return;
+            try
+            {
+                var itemId = GetItemIdFromCheckBox(sender as CheckBox);
+                await _service.ToggleItem(_tripId, _sectionId, itemId);
+                Bindings.Update();
+            }
+            catch
+            {
+                //TODO error handling
+            }
+        }
+
+        private Guid GetItemIdFromCheckBox(CheckBox cb)
+        {
+            if (cb is null || cb.Tag is null) throw new Exception();
 
             var success = Guid.TryParse(cb.Tag.ToString(), out var itemId);
-            if (!success) return;
-
-            await _service.ToggleItem(_tripId, _sectionId, itemId);
-            Bindings.Update();
+            return success ? itemId : throw new Exception();
         }
+
 
         private async void AddTodo_Button_OnClick(object sender, RoutedEventArgs e)
         {
@@ -62,6 +75,31 @@ namespace Vecto.UWP.Pages.Sections
             {
                 //TODO exception handling
             }
+        }
+
+        private void EditTodo_Click(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException(); //TODO
+        }
+
+        private async void DeleteTodo_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var todo = (sender as MenuFlyoutItem).DataContext as TodoItem;
+                await _service.DeleteItem(_tripId, _sectionId, todo.Id);
+                _todoItems.Remove(todo);
+                Bindings.Update();
+            }
+            catch
+            {
+                //TODO error handling
+            }
+        }
+
+        private void TodoRightTapped(object sender, RightTappedRoutedEventArgs e)
+        {
+            FlyoutBase.ShowAttachedFlyout(sender as FrameworkElement);
         }
     }
 }

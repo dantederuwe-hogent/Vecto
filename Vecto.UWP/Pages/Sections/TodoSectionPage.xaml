@@ -16,7 +16,15 @@
                             IsChecked="{x:Bind Checked}" 
                             Checked="CheckBox_Toggle"
                             Unchecked="CheckBox_Toggle"
-                            Tag="{x:Bind Id}"/>
+                            Tag="{x:Bind Id}"
+                            RightTapped="TodoRightTapped">
+                        <FlyoutBase.AttachedFlyout>
+                            <MenuFlyout>
+                                <MenuFlyoutItem Text="Edit" Icon="Edit" Click="EditTodo_Click" />
+                                <MenuFlyoutItem Text="Delete" Icon="Delete" Click="DeleteTodo_Click" />
+                            </MenuFlyout>
+                        </FlyoutBase.AttachedFlyout>
+                    </CheckBox>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>

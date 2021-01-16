@@ -53,5 +53,7 @@ namespace Vecto.UWP.Services
         [Post("/trips/{tripId}/sections/{sectionId}/items/{itemId}/toggle")]
         Task ToggleItem(Guid tripId, Guid sectionId, Guid itemId);
 
+        [Delete("/trips/{tripId}/sections/{sectionId}/items/{itemId}")]
+        Task DeleteItem(Guid tripId, Guid sectionId, Guid itemId);
     }
 }
