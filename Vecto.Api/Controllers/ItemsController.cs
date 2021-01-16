@@ -98,7 +98,7 @@ namespace Vecto.Api.Controllers
             return res;
         }
 
-        [HttpPatch("itemId")]
+        [HttpPatch("{itemId}")]
         public IActionResult Update(Guid tripId, Guid sectionId, Guid itemId, ItemDTO itemDTO)
         {
             // todo: validation
@@ -123,7 +123,7 @@ namespace Vecto.Api.Controllers
             return Ok();
         }
 
-        [HttpDelete("itemId")]
+        [HttpDelete("{itemId}")]
         public IActionResult Delete(Guid tripId, Guid sectionId, Guid itemId)
         {
             var trip = _tripsRepository.GetBy(tripId);
