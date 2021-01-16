@@ -22,14 +22,26 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-
-        <StackPanel Orientation="Horizontal" Spacing="6" Grid.Row="0">
-            <TextBlock VerticalAlignment="Center" Text="{Binding StartDateTime, Converter={StaticResource DateTimeConverter}, ConverterParameter='dd MMMM yyyy'}" />
-            <TextBlock VerticalAlignment="Center" Text="—" />
-            <TextBlock VerticalAlignment="Center" Text="{Binding EndDateTime, Converter={StaticResource DateTimeConverter}, ConverterParameter='dd MMMM yyyy'}" />
-            <Button Height="28" Content="Edit" Click="EditButton_Click" />
-            <Button Height="28" Content="Add Section" Click="AddSectionButton_Click" />
-        </StackPanel>
+        
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            
+            <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="6" Grid.Row="0">
+                <TextBlock VerticalAlignment="Center" Text="{Binding StartDateTime, Converter={StaticResource DateTimeConverter}, ConverterParameter='dd MMMM yyyy'}" />
+                <TextBlock VerticalAlignment="Center" Text="—" />
+                <TextBlock VerticalAlignment="Center" Text="{Binding EndDateTime, Converter={StaticResource DateTimeConverter}, ConverterParameter='dd MMMM yyyy'}" />
+                <Button Height="28" Content="Edit" Click="EditButton_Click" />
+                <Button Height="28" Content="Add Section" Click="AddSectionButton_Click" />
+            </StackPanel>
+            <ProgressBar Grid.Column="1" HorizontalAlignment="Right" Width="200" Height="20" Maximum="1">
+                <ToolTipService.ToolTip>
+                    <ToolTip />
+                </ToolTipService.ToolTip>
+            </ProgressBar>
+        </Grid>
 
         <Pivot Grid.Row="1" Margin="0 30 0 0" x:Name="SectionsPivot" ItemsSource="{x:Bind _sections}">
 

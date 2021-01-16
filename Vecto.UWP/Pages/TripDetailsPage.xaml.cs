@@ -122,5 +122,10 @@ namespace Vecto.UWP.Pages
                 //    return;
             }
         }
+
+        private void ProgressBar_PointerEntered(object sender, PointerRoutedEventArgs e)
+        {
+            FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
+        }
     }
 }
