@@ -135,5 +135,27 @@ namespace Vecto.Api.Controllers
 
             return Ok();
         }
+
+        [HttpPost("{itemId}/toggle")]
+        public IActionResult Toggle(Guid tripId, Guid sectionId, Guid itemId)
+        {
+            var trip = _tripsRepository.GetBy(tripId);
+            if (trip is null) return NotFound("trip not found");
+
+            var section = trip.Sections.SingleOrDefault(s => s.Id == sectionId);
+            if (section is null) return NotFound("section not found");
+
+            ISectionItem item = null;
+            if (section is TodoSection todoSection) item = todoSection.Items.SingleOrDefault(i => i.Id == itemId);
+            else if (section is PackingSection packingSection) item = packingSection.Items.SingleOrDefault(i => i.Id == itemId);
+
+            if (item is null) return NotFound("item not found");
+
+            if (item is IToggleable tItem) tItem.Toggle();
+
+            _tripsRepository.SaveChanges();
+
+            return Ok();
+        }
     }
 }
