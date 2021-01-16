@@ -19,7 +19,12 @@ namespace Vecto.Infrastructure.Data.Repositories
         }
 
         public void Add(Trip trip) => _trips.Add(trip);
-        public IList<Trip> GetAll() => _trips.Include(t => t.Sections).ToList();
+        public IList<Trip> GetAll() => _trips
+            .Include(t => t.Sections)
+            .ThenInclude(s => (s as PackingSection).Items)
+            .Include(t => t.Sections)
+            .ThenInclude(s => (s as TodoSection).Items)
+            .ToList();
         public Trip GetBy(Guid id) => GetAll().SingleOrDefault(t => t.Id.Equals(id));
         public void Update(Trip trip) => _trips.Update(trip);
         public void Delete(Trip trip) => _trips.Remove(trip);
