@@ -41,6 +41,12 @@ namespace Vecto.UWP.Services
         [Post("/trips/{tripId}/sections")]
         Task<IEnumerable<Section>> AddTripSection(Guid tripId, [Body] SectionDTO model);
 
+        [Patch("/trips/{tripId}/sections/{sectionId}")]
+        Task UpdateTripSection(Guid tripid, Guid sectionId, [Body] SectionDTO model);
+
+        [Delete("/trips/{tripId}/sections/{sectionId}")]
+        Task DeleteTripSection(Guid tripid, Guid sectionId);
+
         [Get("/sections/types")]
         Task<IEnumerable<string>> GetSectionTypes();
 

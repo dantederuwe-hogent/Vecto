@@ -80,6 +80,16 @@
         </ContentDialog>
 
         <ContentDialog
+        Name="EditSectionDialog"
+        Title="Edit Section"
+        PrimaryButtonText="Apply"
+        CloseButtonText="Cancel">
+            <StackPanel Spacing="12" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                <TextBox Name="EditSectionName" Header="Name" />
+            </StackPanel>
+        </ContentDialog>
+        
+        <ContentDialog
         Name="EditTripDialog"
         Title="Edit Trip"
         PrimaryButtonText="Apply"

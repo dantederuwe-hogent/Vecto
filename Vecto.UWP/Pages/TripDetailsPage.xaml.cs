@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Vecto.Application.Sections;
@@ -95,14 +96,36 @@ namespace Vecto.UWP.Pages
             FlyoutBase.ShowAttachedFlyout(sender as FrameworkElement);
         }
         
-        private void EditSection_Click(object sender, RoutedEventArgs e)
+        private async void EditSection_Click(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            var selectedSection = (sender as MenuFlyoutItem).DataContext as Section;
+            EditSectionName.Text = selectedSection.Name;
+            
+            if (await EditSectionDialog.ShowAsync() != ContentDialogResult.Primary) return;
+
+            var editedSection = new SectionDTO
+            {
+                Name = EditSectionName.Text,
+                SectionType = selectedSection.SectionType
+            };
+            
+            await _service.UpdateTripSection(_trip.Id, selectedSection.Id, editedSection);
+            _sections.FirstOrDefault(s => s.Id == selectedSection.Id).UpdateWith(editedSection);
+            Bindings.Update(); // this does not work?
         }
 
-        private void DeleteSection_Click(object sender, RoutedEventArgs e)
+        private async void DeleteSection_Click(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            var selectedSection = (sender as MenuFlyoutItem).DataContext as Section;
+            try
+            { 
+                await _service.DeleteTripSection(_trip.Id, selectedSection.Id);
+                _sections.Remove(selectedSection);
+            }
+            catch
+            {
+                //TODO: exception handling
+            }
         }
 
         private void LoadItemsFrame(object sender, RoutedEventArgs e)
