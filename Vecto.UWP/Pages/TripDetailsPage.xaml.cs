@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using Vecto.Application.Sections;
 using Vecto.Application.Trips;
 using Vecto.Core.Entities;
+using Vecto.UWP.Pages.Sections;
 using Vecto.UWP.Services;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -102,6 +103,23 @@ namespace Vecto.UWP.Pages
         private void DeleteSection_Click(object sender, RoutedEventArgs e)
         {
             throw new NotImplementedException();
+        }
+
+        private void LoadItemsFrame(object sender, RoutedEventArgs e)
+        {
+            var frame = sender as Frame;
+            var selectedSection = SectionsPivot.SelectedItem as SectionDTO;
+            var sectionType = selectedSection.SectionType;
+
+            switch (sectionType)
+            {
+                case "TodoSection":
+                    frame.Navigate(typeof(TodoSectionPage), SectionsPivot.SelectedIndex);
+                    return; 
+                //case "PackingSection":
+                //    frame.Navigate(typeof(PackingSectionPage));
+                //    return;
+            }
         }
     }
 }
