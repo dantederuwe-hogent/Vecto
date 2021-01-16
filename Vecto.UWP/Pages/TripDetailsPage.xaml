@@ -36,9 +36,11 @@
                 <Button Height="28" Content="Edit" Click="EditButton_Click" />
                 <Button Height="28" Content="Add Section" Click="AddSectionButton_Click" />
             </StackPanel>
-            <ProgressBar Grid.Column="1" HorizontalAlignment="Right" Width="200" Height="20" Maximum="1">
+            <ProgressBar Name="TripProgressBar" Grid.Column="1" HorizontalAlignment="Right" Width="200" Height="20" Maximum="1">
                 <ToolTipService.ToolTip>
-                    <ToolTip />
+                    <ToolTip>
+                        <TextBlock Name="TripProgressText" />
+                    </ToolTip>
                 </ToolTipService.ToolTip>
             </ProgressBar>
         </Grid>

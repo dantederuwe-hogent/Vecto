@@ -61,5 +61,8 @@ namespace Vecto.UWP.Services
 
         [Delete("/trips/{tripId}/sections/{sectionId}/items/{itemId}")]
         Task DeleteItem(Guid tripId, Guid sectionId, Guid itemId);
+
+        [Get("/trips/{tripId}/progress")]
+        Task<float> GetTripProgress(Guid tripId);
     }
 }

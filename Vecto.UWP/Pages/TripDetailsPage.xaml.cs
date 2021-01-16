@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,6 +12,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
+using System.Threading.Tasks;
 
 namespace Vecto.UWP.Pages
 {
@@ -38,8 +39,9 @@ namespace Vecto.UWP.Pages
             _sections = new ObservableCollection<Section>(sections);
 
             InitializeComponent(); //Initialize here
-        }
 
+            UpdateProgressBar();
+        }
 
         private async void EditButton_Click(object sender, RoutedEventArgs e)
         {
@@ -149,6 +151,13 @@ namespace Vecto.UWP.Pages
         private void ProgressBar_PointerEntered(object sender, PointerRoutedEventArgs e)
         {
             FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
+        }
+
+        private async void UpdateProgressBar()
+        {
+            double progress = (double)await _service.GetTripProgress(_trip.Id);
+            TripProgressBar.Value = progress;
+            TripProgressText.Text = $"Completed: {(int)(progress * 100)}%";
         }
     }
 }
