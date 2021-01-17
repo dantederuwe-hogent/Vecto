@@ -33,6 +33,7 @@ namespace Vecto.Api
             app.UseSwaggerUi3();
 
             app.UseRouting();
+            app.UseCors();
             app.UseAuthorization();
             app.UseEndpoints(endpoints => endpoints.MapControllers());
         }

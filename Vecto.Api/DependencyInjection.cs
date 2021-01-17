@@ -27,7 +27,7 @@ namespace Vecto.Api
 
             //TODO set origins
             services.AddCors(options =>
-                options.AddPolicy("AllowAllOrigins", builder => builder.AllowAnyOrigin().AllowAnyMethod()));
+                options.AddDefaultPolicy(builder => builder.AllowAnyMethod().AllowCredentials().SetIsOriginAllowed(_=>true)));
         }
 
         private static void AddCustomSwagger(this IServiceCollection services)
