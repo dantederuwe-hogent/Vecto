@@ -10,6 +10,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 
 namespace Vecto.UWP.Pages
@@ -22,12 +23,15 @@ namespace Vecto.UWP.Pages
         private IEnumerable<string> _sectionTypes;
         private NavigationView _navigationView;
         private ObservableCollection<Section> _sections;
+        private dynamic _navigationParams;
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
 
             dynamic parameters = e.Parameter;
+            _navigationParams = parameters;
+
             _trip = parameters.trip;
             _navigationView = parameters._navigationView;
 
@@ -84,6 +88,9 @@ namespace Vecto.UWP.Pages
 
                 await _service.AddTripSection(_trip.Id, model);
                 _sections.Add(model.MapToSection());
+
+                Frame.Navigate(GetType(), _navigationParams, new SuppressNavigationTransitionInfo()); //on add, frame just does not want to load... 
+
             }
             catch
             {
@@ -131,7 +138,11 @@ namespace Vecto.UWP.Pages
 
         private void LoadItemsFrame(object sender, RoutedEventArgs e)
         {
-            var frame = sender as Frame;
+            LoadPivotItemFrame(sender as Frame);
+        }
+
+        private void LoadPivotItemFrame(Frame frame)
+        {
             var selectedSection = SectionsPivot.SelectedItem as Section;
 
             var parameter = new {TripId = _trip.Id, SectionId = selectedSection.Id, TripDetailsPage = this };
@@ -140,7 +151,7 @@ namespace Vecto.UWP.Pages
             {
                 case "TodoSection":
                     frame.Navigate(typeof(TodoSectionPage), parameter);
-                    return; 
+                    return;
                 case "PackingSection":
                     frame.Navigate(typeof(PackingSectionPage), parameter);
                     return;
