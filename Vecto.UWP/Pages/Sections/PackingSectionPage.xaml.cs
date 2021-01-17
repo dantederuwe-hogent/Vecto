@@ -61,6 +61,10 @@ namespace Vecto.UWP.Pages.Sections
 
         private async void AddItem_Button_OnClick(object sender, RoutedEventArgs e)
         {
+            AddItemName.Text = "";
+            AddItemName.Description = "";
+            AddItemAmount.Value = 1;
+
             if (await AddItemDialog.ShowAsync() != ContentDialogResult.Primary) return;
 
             try

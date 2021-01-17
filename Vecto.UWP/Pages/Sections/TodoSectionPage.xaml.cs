@@ -59,6 +59,9 @@ namespace Vecto.UWP.Pages.Sections
 
         private async void AddTodo_Button_OnClick(object sender, RoutedEventArgs e)
         {
+            AddTodoName.Text = "";
+            AddTodoDesc.Text = "";
+
             if (await AddTodoDialog.ShowAsync() != ContentDialogResult.Primary) return;
 
             try
