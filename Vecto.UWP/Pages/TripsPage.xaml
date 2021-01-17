@@ -5,33 +5,35 @@
     xmlns:converters="using:Vecto.UWP.Converters"
     xmlns:local="using:Vecto.UWP.Pages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:entities="using:Vecto.Core.Entities"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     >
-
     <Page.Resources>
-        <CollectionViewSource x:Name="cvsTrips" Source="{Binding Trips}"/>
         <converters:DateTimeConverter x:Key="DateTimeConverter" />
     </Page.Resources>
+
 
     <Grid RowSpacing="12">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
+
         <Button Grid.Row="0" Name="AddTripButton" Click="AddTripButton_Click">
             <StackPanel Orientation="Horizontal" Spacing="4">
                 <TextBlock VerticalAlignment="Center" FontFamily="Segoe MDL2 Assets" Text="&#xE710;" />
                 <TextBlock Text="Add Trip" />
             </StackPanel>
         </Button>
-        <GridView Grid.Row="1" ItemsSource="{Binding Source={StaticResource cvsTrips}}" IsItemClickEnabled="True" ItemClick="GridView_ItemClick" >
+
+        <GridView Grid.Row="1" ItemsSource="{x:Bind _trips}" IsItemClickEnabled="True" ItemClick="GridView_ItemClick" >
             <GridView.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Width="300" Padding="20" Background="{ThemeResource SystemListLowColor}">
-                        <TextBlock Text="{Binding Name}" FontWeight="Bold" Style="{StaticResource TitleTextBlockStyle}"/>
-                        <TextBlock Text="{Binding StartDateTime, Converter={StaticResource DateTimeConverter}, ConverterParameter='MMMM yyyy'}" Style="{StaticResource BodyTextBlockStyle}" />
+                <DataTemplate x:DataType="entities:Trip">
+                    <StackPanel Width="300" Padding="20" Background="{ThemeResource SystemControlBackgroundListLowBrush}">
+                        <TextBlock Text="{x:Bind Name}" FontWeight="Bold" Style="{StaticResource TitleTextBlockStyle}"/>
+                        <TextBlock Text="{x:Bind StartDateTime, Converter={StaticResource DateTimeConverter}, ConverterParameter='MMMM yyyy'}" Style="{StaticResource BodyTextBlockStyle}" />
                     </StackPanel>
                 </DataTemplate>
             </GridView.ItemTemplate>
