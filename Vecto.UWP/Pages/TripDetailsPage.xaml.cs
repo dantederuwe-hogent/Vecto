@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Vecto.Application.Sections;
@@ -12,7 +11,6 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
-using System.Threading.Tasks;
 
 namespace Vecto.UWP.Pages
 {
@@ -110,10 +108,10 @@ namespace Vecto.UWP.Pages
                 Name = EditSectionName.Text,
                 SectionType = selectedSection.SectionType
             };
-            
-            await _service.UpdateTripSection(_trip.Id, selectedSection.Id, editedSection);
-            _sections.FirstOrDefault(s => s.Id == selectedSection.Id).UpdateWith(editedSection);
-            Bindings.Update(); // this does not work?
+
+            var updated = await _service.UpdateTripSection(_trip.Id, selectedSection.Id, editedSection);
+            var index = _sections.IndexOf(selectedSection);
+            if (index != -1) _sections[index] = updated;
         }
 
         private async void DeleteSection_Click(object sender, RoutedEventArgs e)

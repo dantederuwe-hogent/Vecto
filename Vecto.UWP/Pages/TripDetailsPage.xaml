@@ -45,7 +45,7 @@
             </ProgressBar>
         </Grid>
 
-        <Pivot Grid.Row="1" Margin="0 30 0 0" x:Name="SectionsPivot" ItemsSource="{x:Bind _sections}">
+        <Pivot Grid.Row="1" Margin="0 30 0 0" x:Name="SectionsPivot" ItemsSource="{x:Bind _sections, Mode=OneWay}">
 
             <Pivot.HeaderTemplate>
                 <DataTemplate x:DataType="entities:Section" >
