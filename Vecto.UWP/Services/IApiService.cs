@@ -27,7 +27,7 @@ namespace Vecto.UWP.Services
         Task<IEnumerable<Trip>> GetTrips();
 
         [Post("/trips")]
-        Task<IEnumerable<TripDTO>> AddTrip(TripDTO tripDTO);
+        Task<IEnumerable<Trip>> AddTrip(TripDTO tripDTO);
 
         [Get("/trips/{id}")]
         Task<Trip> GetTrip(Guid id);

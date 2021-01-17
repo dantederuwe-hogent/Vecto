@@ -1,4 +1,7 @@
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using Vecto.Application.Trips;
 using Vecto.Core.Entities;
 using Vecto.UWP.Services;
@@ -10,32 +13,34 @@ namespace Vecto.UWP.Pages
 {
     public sealed partial class TripsPage : Page
     {
-        private readonly IApiService _service;
+        private readonly IApiService _service = CustomRefitService.ForAuthenticated<IApiService>();
 
         private NavigationView _navigationView;
+        private ObservableCollection<Trip> _trips;
 
-        public TripsPage()
-        {
-            _service = CustomRefitService.ForAuthenticated<IApiService>();
-            this.InitializeComponent();
-        }
 
-        protected async override void OnNavigatedTo(NavigationEventArgs e)
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
 
             _navigationView = (NavigationView)e.Parameter;
 
             var trips = await _service.GetTrips();
-            cvsTrips.Source = trips;
-
+            SetupTrips(trips);
+            
             /*
              * TODO: This is an ugly fix at the moment, but it works
              * 
              * Fixes an issue where by default the application default focuses
              * the trips item on the navigation view, giving it an ugly border...
              */
+            InitializeComponent();
             AddTripButton.Focus(FocusState.Pointer);
+        }
+
+        private void SetupTrips(IEnumerable<Trip> trips)
+        {
+            _trips = new ObservableCollection<Trip>(trips.OrderBy(t => t.StartDateTime).AsEnumerable());
         }
 
         private async void AddTripButton_Click(object sender, RoutedEventArgs e)
@@ -55,13 +60,15 @@ namespace Vecto.UWP.Pages
                     EndDateTime = NewTripEndDatePicker.Date.DateTime
                 };
 
-                cvsTrips.Source = await _service.AddTrip(newTrip);
+                var trips = await _service.AddTrip(newTrip);
+                SetupTrips(trips);
+                Bindings.Update();
             }
         }
 
         private void GridView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            var trip = (Trip)e.ClickedItem;
+            var trip = e.ClickedItem as Trip;
             _navigationView.Header = trip.Name;
             _navigationView.IsBackButtonVisible = NavigationViewBackButtonVisible.Visible;
             Frame.Navigate(typeof(TripDetailsPage), new { trip, _navigationView });
