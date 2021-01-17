@@ -53,8 +53,14 @@ namespace Vecto.UWP.Services
         [Get("/trips/{tripId}/sections/{sectionId}/items")]
         Task<IEnumerable<TodoItem>> GetTodoItems(Guid tripId, Guid sectionId);
 
+        [Get("/trips/{tripId}/sections/{sectionId}/items")]
+        Task<IEnumerable<PackingItem>> GetPackingItems(Guid tripId, Guid sectionId);
+        
         [Post("/trips/{tripId}/sections/{sectionId}/items")]
         Task<TodoItem> AddTodoItem(Guid tripId, Guid sectionId, [Body] ItemDTO model);
+        
+        [Post("/trips/{tripId}/sections/{sectionId}/items")]
+        Task<PackingItem> AddPackingItem(Guid tripId, Guid sectionId, [Body] ItemDTO model);
 
         [Post("/trips/{tripId}/sections/{sectionId}/items/{itemId}/toggle")]
         Task ToggleItem(Guid tripId, Guid sectionId, Guid itemId);

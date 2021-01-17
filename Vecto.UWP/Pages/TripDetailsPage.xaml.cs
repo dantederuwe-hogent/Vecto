@@ -140,9 +140,9 @@ namespace Vecto.UWP.Pages
                 case "TodoSection":
                     frame.Navigate(typeof(TodoSectionPage), parameter);
                     return; 
-                //case "PackingSection":
-                //    frame.Navigate(typeof(PackingSectionPage));
-                //    return;
+                case "PackingSection":
+                    frame.Navigate(typeof(PackingSectionPage), parameter);
+                    return;
             }
         }
 
