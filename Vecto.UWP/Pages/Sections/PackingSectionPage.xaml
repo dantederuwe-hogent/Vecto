@@ -42,14 +42,30 @@
 
         <ContentDialog
             Name="AddItemDialog"
-            Title="Add Todo Item"
+            Title="Add Packing Item"
             PrimaryButtonText="Add"
             CloseButtonText="Cancel">
             <StackPanel Spacing="12" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                <TextBlock Text="Add Item"/>
                 <TextBox Name="AddItemName" Header="Title" />
                 <TextBox Name="AddItemDesc" Header="Description" />
                 <muxc:NumberBox x:Name="AddItemAmount"
+                                Header="Amount"
+                                Value="1"
+                                SpinButtonPlacementMode="Inline"
+                                SmallChange="1"
+                                LargeChange="10" />
+            </StackPanel>
+        </ContentDialog>
+
+        <ContentDialog
+            Name="EditItemDialog"
+            Title="Edit Packing Item"
+            PrimaryButtonText="Apply"
+            CloseButtonText="Cancel">
+            <StackPanel Spacing="12" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                <TextBox Name="EditItemName" Header="Title" />
+                <TextBox Name="EditItemDesc" Header="Description" />
+                <muxc:NumberBox x:Name="EditItemAmount"
                                 Header="Amount"
                                 Value="1"
                                 SpinButtonPlacementMode="Inline"

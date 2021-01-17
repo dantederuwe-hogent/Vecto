@@ -80,9 +80,35 @@ namespace Vecto.UWP.Pages.Sections
             }
         }
 
-        private void EditItem_Click(object sender, RoutedEventArgs e)
+        private async void EditItem_Click(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException(); //TODO
+            var item = (sender as MenuFlyoutItem).DataContext as PackingItem;
+
+            EditItemName.Text = item.Title;
+            EditItemDesc.Text = item.Description;
+            EditItemAmount.Value = item.Amount;
+
+            if (await EditItemDialog.ShowAsync() != ContentDialogResult.Primary) return;
+
+            try
+            {
+                var editedItem = new ItemDTO()
+                {
+                    Title = EditItemName.Text,
+                    Description = EditItemDesc.Text,
+                    Amount= (int)EditItemAmount.Value
+                };
+
+                var updated = (PackingItem)await _service.UpdatePackingItem(_tripId, _sectionId, item.Id, editedItem);
+                var index = _items.IndexOf(item);
+                if (index != -1) _items[index] = updated;
+
+
+            }
+            catch
+            {
+                //TODO exception handling
+            }
         }
 
         private async void DeleteItem_Click(object sender, RoutedEventArgs e)
