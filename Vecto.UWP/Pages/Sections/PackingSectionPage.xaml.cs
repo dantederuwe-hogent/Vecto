@@ -14,6 +14,7 @@ namespace Vecto.UWP.Pages.Sections
     public sealed partial class PackingSectionPage : Page
     {
         private readonly IApiService _service = CustomRefitService.ForAuthenticated<IApiService>();
+        private TripDetailsPage _tripDetailsPage;
         private ObservableCollection<PackingItem> _items;
         private Guid _tripId, _sectionId;
         
@@ -21,9 +22,10 @@ namespace Vecto.UWP.Pages.Sections
         {
             base.OnNavigatedTo(e);
 
-            dynamic guids = e.Parameter;
-            _tripId = guids.TripId;
-            _sectionId = guids.SectionId;
+            dynamic parameter = e.Parameter;
+            _tripId = parameter.TripId;
+            _sectionId = parameter.SectionId;
+            _tripDetailsPage = parameter.TripDetailsPage;
 
             var items = await _service.GetPackingItems(_tripId, _sectionId);
             _items = new ObservableCollection<PackingItem>(items);
@@ -39,6 +41,7 @@ namespace Vecto.UWP.Pages.Sections
                 var itemId = GetItemIdFromCheckBox(sender as CheckBox);
                 await _service.ToggleItem(_tripId, _sectionId, itemId);
                 Bindings.Update();
+                _tripDetailsPage.UpdateProgressBar();
             }
             catch
             {
@@ -71,7 +74,7 @@ namespace Vecto.UWP.Pages.Sections
 
                 var newItem = await _service.AddPackingItem(_tripId, _sectionId, item);
                 _items.Add(newItem);
-
+                _tripDetailsPage.UpdateProgressBar();
                 Bindings.Update();
             }
             catch
@@ -102,8 +105,6 @@ namespace Vecto.UWP.Pages.Sections
                 var updated = (PackingItem)await _service.UpdatePackingItem(_tripId, _sectionId, item.Id, editedItem);
                 var index = _items.IndexOf(item);
                 if (index != -1) _items[index] = updated;
-
-
             }
             catch
             {
@@ -118,6 +119,7 @@ namespace Vecto.UWP.Pages.Sections
                 var item = (sender as MenuFlyoutItem).DataContext as PackingItem;
                 await _service.DeleteItem(_tripId, _sectionId, item.Id);
                 _items.Remove(item);
+                _tripDetailsPage.UpdateProgressBar();
                 Bindings.Update();
             }
             catch

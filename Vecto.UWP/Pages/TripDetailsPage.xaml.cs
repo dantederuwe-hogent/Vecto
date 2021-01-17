@@ -121,6 +121,7 @@ namespace Vecto.UWP.Pages
             { 
                 await _service.DeleteTripSection(_trip.Id, selectedSection.Id);
                 _sections.Remove(selectedSection);
+                UpdateProgressBar();
             }
             catch
             {
@@ -133,7 +134,7 @@ namespace Vecto.UWP.Pages
             var frame = sender as Frame;
             var selectedSection = SectionsPivot.SelectedItem as Section;
 
-            var parameter = new {TripId = _trip.Id, SectionId = selectedSection.Id};
+            var parameter = new {TripId = _trip.Id, SectionId = selectedSection.Id, TripDetailsPage = this };
 
             switch (selectedSection.SectionType)
             {
@@ -151,7 +152,7 @@ namespace Vecto.UWP.Pages
             FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
         }
 
-        private async void UpdateProgressBar()
+        public async void UpdateProgressBar()
         {
             double progress = (double)await _service.GetTripProgress(_trip.Id);
             TripProgressBar.Value = progress;
