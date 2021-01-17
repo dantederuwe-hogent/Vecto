@@ -39,15 +39,8 @@ namespace Vecto.UWP.Pages.Authentication
             }
             catch (ApiException ex)
             {
-                StringBuilder sb = new StringBuilder();
-
                 dynamic errors = JObject.Parse(ex.Content)["errors"];
-                foreach (var error in errors)
-                {
-                    sb.AppendFormat($"- {error.errorMessage}\n");
-                }
-
-                ErrorTextBlock.Text = sb.ToString();
+                ErrorTextBlock.Text = errors[0].errorMessage;
             }
             catch (HttpRequestException)
             {
