@@ -1,0 +1,57 @@
+﻿<Page
+    x:Class="Vecto.UWP.Pages.Sections.TodoSectionPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:entities="using:Vecto.Core.Entities" 
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <StackPanel>
+        <ListView ItemsSource="{x:Bind _todoItems}" >
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="entities:TodoItem">
+                    <CheckBox  
+                            Content="{x:Bind Title}"
+                            IsChecked="{x:Bind Checked}" 
+                            Checked="CheckBox_Toggle"
+                            Unchecked="CheckBox_Toggle"
+                            Tag="{x:Bind Id}"
+                            RightTapped="TodoRightTapped">
+                        <FlyoutBase.AttachedFlyout>
+                            <MenuFlyout>
+                                <MenuFlyoutItem Text="Edit" Icon="Edit" Click="EditTodo_Click" />
+                                <MenuFlyoutItem Text="Delete" Icon="Delete" Click="DeleteTodo_Click" />
+                            </MenuFlyout>
+                        </FlyoutBase.AttachedFlyout>
+                    </CheckBox>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Button x:Name="AddTodo_Button" Content="Add Todo Item" Click="AddTodo_Button_OnClick"></Button>
+
+        <ContentDialog
+            Name="AddTodoDialog"
+            Title="Add Todo Item"
+            PrimaryButtonText="Add"
+            CloseButtonText="Cancel">
+            <StackPanel Spacing="12" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                <TextBox Name="AddTodoName" Header="Title" />
+                <TextBox Name="AddTodoDesc" Header="Description" />
+            </StackPanel>
+        </ContentDialog>
+
+        <ContentDialog
+            Name="EditTodoDialog"
+            Title="Edit Todo Item"
+            PrimaryButtonText="Apply"
+            CloseButtonText="Cancel">
+            <StackPanel Spacing="12" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                <TextBox Name="EditTodoName" Header="Title" />
+                <TextBox Name="EditTodoDesc" Header="Description" />
+            </StackPanel>
+        </ContentDialog>
+    </StackPanel>
+</Page>
+
+    

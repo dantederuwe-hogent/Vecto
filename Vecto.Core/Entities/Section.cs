@@ -2,7 +2,7 @@
 
 namespace Vecto.Core.Entities
 {
-    public abstract class Section : EntityBase, ISection
+    public class Section : EntityBase, ISection
     {
         public string Name { get; set; }
 

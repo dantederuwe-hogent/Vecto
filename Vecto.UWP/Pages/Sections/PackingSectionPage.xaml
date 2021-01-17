@@ -1,0 +1,79 @@
+<Page
+    x:Class="Vecto.UWP.Pages.Sections.PackingSectionPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:entities="using:Vecto.Core.Entities"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <StackPanel>
+        <ListView ItemsSource="{x:Bind _items}" >
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="entities:PackingItem">
+                    <CheckBox  
+                            IsChecked="{x:Bind Checked}" 
+                            Checked="CheckBox_Toggle"
+                            Unchecked="CheckBox_Toggle"
+                            Tag="{x:Bind Id}"
+                            RightTapped="ItemRightTapped">
+                        <CheckBox.ContentTemplate>
+                            <DataTemplate x:DataType="entities:PackingItem">
+                                <StackPanel Orientation="Horizontal">
+                                    <Border Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}" CornerRadius="5" Padding="10 1 10 1" Margin="5 0 10 0">
+                                        <TextBlock Text="{x:Bind Amount}"/>
+                                    </Border>
+                                    <TextBlock Text="{x:Bind Title}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </CheckBox.ContentTemplate>
+                        <FlyoutBase.AttachedFlyout>
+                            <MenuFlyout>
+                                <MenuFlyoutItem Text="Edit" Icon="Edit" Click="EditItem_Click" />
+                                <MenuFlyoutItem Text="Delete" Icon="Delete" Click="DeleteItem_Click" />
+                            </MenuFlyout>
+                        </FlyoutBase.AttachedFlyout>
+                    </CheckBox>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Button Content="Add Packing Item" Click="AddItem_Button_OnClick"></Button>
+
+        <ContentDialog
+            Name="AddItemDialog"
+            Title="Add Packing Item"
+            PrimaryButtonText="Add"
+            CloseButtonText="Cancel">
+            <StackPanel Spacing="12" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                <TextBox Name="AddItemName" Header="Title" />
+                <TextBox Name="AddItemDesc" Header="Description" />
+                <muxc:NumberBox x:Name="AddItemAmount"
+                                Header="Amount"
+                                Value="1"
+                                SpinButtonPlacementMode="Inline"
+                                SmallChange="1"
+                                LargeChange="10" />
+            </StackPanel>
+        </ContentDialog>
+
+        <ContentDialog
+            Name="EditItemDialog"
+            Title="Edit Packing Item"
+            PrimaryButtonText="Apply"
+            CloseButtonText="Cancel">
+            <StackPanel Spacing="12" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                <TextBox Name="EditItemName" Header="Title" />
+                <TextBox Name="EditItemDesc" Header="Description" />
+                <muxc:NumberBox x:Name="EditItemAmount"
+                                Header="Amount"
+                                Value="1"
+                                SpinButtonPlacementMode="Inline"
+                                SmallChange="1"
+                                LargeChange="10" />
+            </StackPanel>
+        </ContentDialog>
+    </StackPanel>
+</Page>
+
+    

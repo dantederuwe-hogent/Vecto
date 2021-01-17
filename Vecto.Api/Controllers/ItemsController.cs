@@ -74,13 +74,28 @@ namespace Vecto.Api.Controllers
             var section = trip.Sections.SingleOrDefault(s => s.Id == sectionId);
             if (section is null) return NotFound("section not found");
 
-            if (section is TodoSection todoSection) todoSection.Items.Add(itemDTO.MapToTodoItem());
-            else if (section is PackingSection packingSection) packingSection.Items.Add(itemDTO.MapToPackingItem());
+            IActionResult res;
+            switch (section)
+            {
+                case TodoSection ts:
+                    var todo = itemDTO.MapToTodoItem();
+                    ts.Items.Add(todo);
+                    res = Ok(todo);
+                    break;
+                case PackingSection ps:
+                    var pack = itemDTO.MapToPackingItem();
+                    ps.Items.Add(pack);
+                    res = Ok(pack);
+                    break;
+                default:
+                    res = BadRequest();
+                    return res;
+            }
 
             _tripsRepository.Update(trip);
             _tripsRepository.SaveChanges();
 
-            return Ok();
+            return res;
         }
 
         [HttpPatch("{itemId}")]
@@ -105,7 +120,7 @@ namespace Vecto.Api.Controllers
             _tripsRepository.Update(trip);
             _tripsRepository.SaveChanges();
 
-            return Ok();
+            return Ok(item);
         }
 
         [HttpDelete("{itemId}")]

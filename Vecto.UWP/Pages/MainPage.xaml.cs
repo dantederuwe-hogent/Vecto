@@ -1,5 +1,4 @@
-﻿using System;
-using Vecto.UWP.Services;
+﻿using Vecto.UWP.Services;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;

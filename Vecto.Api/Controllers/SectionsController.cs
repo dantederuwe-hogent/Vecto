@@ -1,3 +1,4 @@
+using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -5,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using FluentValidation;
 using Vecto.Application.Helpers;
 using Vecto.Application.Sections;
 using Vecto.Core.Entities;
@@ -104,7 +104,7 @@ namespace Vecto.Api.Controllers
             _tripsRepository.Update(trip);
             _tripsRepository.SaveChanges();
 
-            return Ok();
+            return Ok(section);
         }
 
         [HttpDelete("{sectionId}")]
