@@ -9,6 +9,7 @@ using Vecto.Application.Register;
 using Vecto.Application.Sections;
 using Vecto.Application.Trips;
 using Vecto.Core.Entities;
+using Vecto.Core.Interfaces;
 
 namespace Vecto.UWP.Services
 {
@@ -64,6 +65,12 @@ namespace Vecto.UWP.Services
 
         [Post("/trips/{tripId}/sections/{sectionId}/items/{itemId}/toggle")]
         Task ToggleItem(Guid tripId, Guid sectionId, Guid itemId);
+
+        [Patch("/trips/{tripId}/sections/{sectionId}/items/{itemId}")]
+        Task<TodoItem> UpdateTodoItem(Guid tripId, Guid sectionId, Guid itemId, ItemDTO model);
+
+        [Patch("/trips/{tripId}/sections/{sectionId}/items/{itemId}")]
+        Task<PackingItem> UpdatePackingItem(Guid tripId, Guid sectionId, Guid itemId, ItemDTO model);
 
         [Delete("/trips/{tripId}/sections/{sectionId}/items/{itemId}")]
         Task DeleteItem(Guid tripId, Guid sectionId, Guid itemId);

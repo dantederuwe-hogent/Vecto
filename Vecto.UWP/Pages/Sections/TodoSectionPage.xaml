@@ -36,9 +36,19 @@
             PrimaryButtonText="Add"
             CloseButtonText="Cancel">
             <StackPanel Spacing="12" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                <TextBlock Text="Add Todo Item"/>
                 <TextBox Name="AddTodoName" Header="Title" />
                 <TextBox Name="AddTodoDesc" Header="Description" />
+            </StackPanel>
+        </ContentDialog>
+
+        <ContentDialog
+            Name="EditTodoDialog"
+            Title="Edit Todo Item"
+            PrimaryButtonText="Apply"
+            CloseButtonText="Cancel">
+            <StackPanel Spacing="12" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                <TextBox Name="EditTodoName" Header="Title" />
+                <TextBox Name="EditTodoDesc" Header="Description" />
             </StackPanel>
         </ContentDialog>
     </StackPanel>

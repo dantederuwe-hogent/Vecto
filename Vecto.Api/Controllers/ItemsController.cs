@@ -120,7 +120,7 @@ namespace Vecto.Api.Controllers
             _tripsRepository.Update(trip);
             _tripsRepository.SaveChanges();
 
-            return Ok();
+            return Ok(item);
         }
 
         [HttpDelete("{itemId}")]
